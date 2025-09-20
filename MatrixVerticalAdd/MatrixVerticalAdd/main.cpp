@@ -12,6 +12,7 @@ This program processes matrices to determine if they have vertical additive symm
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -87,12 +88,14 @@ bool readMatrixFromFile(int matrix[][MAX_MATRIX_SIZE], unsigned& height, unsigne
 void displayMatrix(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width) {
     for (int row = 0; row < height; row++)
     {
+        cout << "\t";
         for (int col = 0; col < width; col++)
         {
-            cout << matrix[row][col] << "   ";
+            cout << std::right << std::setw(5) << matrix[row][col] << "\t";
         }
         cout << endl;
     }
+    cout << endl;
 }
 
 /*
@@ -100,6 +103,7 @@ void displayMatrix(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned widt
 */
 void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width, int colSums[MAX_MATRIX_SIZE]) {
     cout << "Sums:" << endl;
+    cout << "\t";
     for (int col = 0; col < width; col++)
     {
         int colSum = 0;
@@ -110,9 +114,9 @@ void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsig
         }
         
         colSums[col] = colSum;
-        cout << colSum << "   ";
+        cout << std::right << std::setw(5) << colSum << "\t";
     }
-    cout << endl;
+    cout << endl << endl;
  }
  
 
@@ -127,17 +131,19 @@ void symmetryCheckMatrix(int colSums[], unsigned width, unsigned height) {
         j++;
     }
 
-    for (int i = 0; i < width; i++)
-    {
+    for (int i = 0; i < width; i++) {
         if (!(reversedColSums[i] == colSums[i]))
         {
-            cout << "No" << endl;
+            cout << "No" << endl << endl;
             return;
         }
     }
-    cout << "Yes" << endl;
+    cout << "Yes" << endl << endl;
 }
 
 void sortMatrixRows(int matrix[][MAX_MATRIX_SIZE], unsigned width, unsigned height) {
-    
+    for (int row = 0; row < height; row++)
+    {
+        std::sort(matrix[row], matrix[row] + width);
+    }
  }
