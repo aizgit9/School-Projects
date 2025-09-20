@@ -61,27 +61,81 @@ int main() {
    exit(EXIT_SUCCESS);
 }
 
+/*
+* Reads the height and width of the matrix from the input file.
+* Loops through the input file numbers based on the given height and width.
+* Adds them to the matrix array.
+*/
 bool readMatrixFromFile(int matrix[][MAX_MATRIX_SIZE], unsigned& height, unsigned& width, ifstream& inputFileStreamObj) {
-    for (int i = 0; i < 2; i++)
+    inputFileStreamObj >> height;
+    inputFileStreamObj >> width;
+    
+    for (int row = 0; row < height; row++)
     {
-        cout << i << endl;
+        for (int col = 0; col < width; col++)
+        {
+             inputFileStreamObj >> matrix[row][col];
+        }
     }
+
     return(false);
 }
 
-
+/*
+* Loops through the matrix and prints out the values in a square height by width format.
+*/
 void displayMatrix(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width) {
-
+    for (int row = 0; row < height; row++)
+    {
+        for (int col = 0; col < width; col++)
+        {
+            cout << matrix[row][col] << "   ";
+        }
+        cout << endl;
+    }
 }
 
-
+/*
+* Adds up the sums of each column in the matrix and then display them.
+*/
 void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width, int colSums[MAX_MATRIX_SIZE]) {
+    cout << "Sums:" << endl;
+    for (int col = 0; col < width; col++)
+    {
+        int colSum = 0;
 
+        for (int row = 0; row < height; row++)
+        {
+            colSum += matrix[row][col];
+        }
+        
+        colSums[col] = colSum;
+        cout << colSum << "   ";
+    }
+    cout << endl;
  }
  
 
 void symmetryCheckMatrix(int colSums[], unsigned width, unsigned height) {
+    int reversedColSums[MAX_MATRIX_SIZE] = { 0 };
+    cout << "Vertical additive symmetry: ";
 
+    int j = 0;
+    for (int i = width - 1; i >= 0; i--)
+    {
+        reversedColSums[j] = colSums[i];
+        j++;
+    }
+
+    for (int i = 0; i < width; i++)
+    {
+        if (!(reversedColSums[i] == colSums[i]))
+        {
+            cout << "No" << endl;
+            return;
+        }
+    }
+    cout << "Yes" << endl;
 }
 
 void sortMatrixRows(int matrix[][MAX_MATRIX_SIZE], unsigned width, unsigned height) {
