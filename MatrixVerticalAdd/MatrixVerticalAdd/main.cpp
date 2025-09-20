@@ -1,11 +1,14 @@
 // Put in a prologue
 
 /*
-Program Name: MatrixVerticalAdd
-Date:         2025-9-19
-Author:       Asher P. Isgitt
-Module Purpose
-This program processes matrices to determine if they have vertical additive symmetry, and then sorts their rows in ascending order.
+* Program Name: MatrixVerticalAdd
+* Date:         2025-9-19
+* Author:       Asher P. Isgitt
+* Module Purpose
+* This program processes matrices from an input file to:
+* Add up the sums of each column
+* Determine if they have vertical additive symmetry
+* Sort their rows in ascending order
 */
 
 #include <string>
@@ -64,13 +67,13 @@ int main() {
 
 /*
 * Reads the height and width of the matrix from the input file.
-* Loops through the input file numbers based on the given height and width.
-* Adds them to the matrix array.
+* Loops through the input file numbers and adds them to the matrix array.
 */
-bool readMatrixFromFile(int matrix[][MAX_MATRIX_SIZE], unsigned& height, unsigned& width, ifstream& inputFileStreamObj) {
+bool readMatrixFromFile(int matrix[][MAX_MATRIX_SIZE], unsigned& height, unsigned& width, ifstream& inputFileStreamObj) 
+{
     inputFileStreamObj >> height;
     inputFileStreamObj >> width;
-    
+
     for (int row = 0; row < height; row++)
     {
         for (int col = 0; col < width; col++)
@@ -82,28 +85,33 @@ bool readMatrixFromFile(int matrix[][MAX_MATRIX_SIZE], unsigned& height, unsigne
     return(false);
 }
 
-/*
-* Loops through the matrix and prints out the values in a square height by width format.
-*/
-void displayMatrix(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width) {
+// Display the values of the matrix in a rectangular tabular format.
+void displayMatrix(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width) 
+{
     for (int row = 0; row < height; row++)
     {
         cout << "\t";
+
         for (int col = 0; col < width; col++)
         {
             cout << std::right << std::setw(5) << matrix[row][col] << "\t";
         }
+
         cout << endl;
     }
+
     cout << endl;
 }
 
 /*
-* Adds up the sums of each column in the matrix and then display them.
+* Adds up the sums of each column in the matrix.
+* Display the sums in a rectangular tabular format.
 */
-void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width, int colSums[MAX_MATRIX_SIZE]) {
+void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsigned width, int colSums[MAX_MATRIX_SIZE]) 
+{
     cout << "Sums:" << endl;
     cout << "\t";
+
     for (int col = 0; col < width; col++)
     {
         int colSum = 0;
@@ -114,34 +122,46 @@ void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsig
         }
         
         colSums[col] = colSum;
+
         cout << std::right << std::setw(5) << colSum << "\t";
     }
+
     cout << endl << endl;
  }
  
 
-void symmetryCheckMatrix(int colSums[], unsigned width, unsigned height) {
-    int reversedColSums[MAX_MATRIX_SIZE] = { 0 };
+// Checks colSums to see if the array has vertical additive symmetry.
+void symmetryCheckMatrix(int colSums[], unsigned width, unsigned height) 
+{
     cout << "Vertical additive symmetry: ";
 
+    int reversedColSums[MAX_MATRIX_SIZE] = { 0 };
     int j = 0;
+
+    // Reversing colSums
     for (int i = width - 1; i >= 0; i--)
     {
         reversedColSums[j] = colSums[i];
         j++;
     }
 
-    for (int i = 0; i < width; i++) {
-        if (!(reversedColSums[i] == colSums[i]))
+    // Comparing reversedColSums with colSums
+    for (int i = 0; i < width; i++) 
+    {
+        if ((reversedColSums[i] != colSums[i]))
         {
             cout << "No" << endl << endl;
+
             return;
         }
     }
+
     cout << "Yes" << endl << endl;
 }
 
-void sortMatrixRows(int matrix[][MAX_MATRIX_SIZE], unsigned width, unsigned height) {
+// Sorts each row in the array in ascending order
+void sortMatrixRows(int matrix[][MAX_MATRIX_SIZE], unsigned width, unsigned height) 
+{
     for (int row = 0; row < height; row++)
     {
         std::sort(matrix[row], matrix[row] + width);
