@@ -128,7 +128,7 @@ void displayCalcMatrixSums(int matrix[][MAX_MATRIX_SIZE], unsigned height, unsig
 void symmetryCheckMatrix(int colSums[], unsigned width, unsigned height) {
     cout << "Vertical additive symmetry: ";
 
-    int reversedColSums[MAX_MATRIX_SIZE] = { 0 };
+    int reversedColSums[MAX_MATRIX_SIZE];
     int j = 0;
 
     // Reverse colSums
@@ -150,8 +150,31 @@ void symmetryCheckMatrix(int colSums[], unsigned width, unsigned height) {
 }
 
 // Sort each row in the array in ascending order
+// Using bubble sort algorithm
 void sortMatrixRows(int matrix[][MAX_MATRIX_SIZE], unsigned width, unsigned height) {
+
     for (int row = 0; row < height; row++) {
-        std::sort(matrix[row], matrix[row] + width);
+
+        //Bubble sort the row
+        do
+        {
+            bool swapped = false;
+            for (int col = 0; col < width - 1; col++) {
+                if (matrix[row][col] > matrix[row][col + 1]) {
+
+                    //Swap indexes
+                    int a = matrix[row][col];
+                    int b = matrix[row][col + 1];
+                    matrix[row][col] = b;
+                    matrix[row][col + 1] = a;
+
+                    swapped = true;
+                }
+            }
+
+            if (swapped == false) {
+                break;
+            }
+        } while (true);
     }
- }
+}
