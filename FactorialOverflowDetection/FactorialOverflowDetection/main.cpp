@@ -1,3 +1,11 @@
+/*
+* Program Name: FactorialOverflowDetection
+* Date:         2025-9-25
+* Author:       Asher P. Isgitt
+* Module Purpose
+* Uses a loop technique and a recursive method to calculate factorials until an overflow is encountered. 
+*/
+
 #include <chrono>
 #include <limits>
 #include <locale>
@@ -17,6 +25,10 @@ bool isSafeMultiply(TypeMultiply mult01, TypeMultiply mult02, TypeMultiply& mult
     if so, set multResult to 0 and leave with a true
     */
 
+    if (mult01 == 0 || mult02 == 0) {
+        multResult = 0;
+        return true;
+    }
     
     /*$$
     calculate the multResult from mult01 and mult02
@@ -25,34 +37,53 @@ bool isSafeMultiply(TypeMultiply mult01, TypeMultiply mult02, TypeMultiply& mult
     if not then leave with a false (overflow)
     */
 
+    multResult = mult01 * mult02;
+
+    if (mult01 == multResult / mult02) {
+        return true;
+    }
+    
+    
+    return false;
 }
 template <class TypeMultiply>
 void calculateTimeFactorialLoopFunc(void) {
 
     //$$ set  start time  
+    auto timeStart = steady_clock::now();
 
     TypeMultiply multiplier = 1,
         factorialResult = 1;
 
-    while (/*$$ invoke isSafeMultiply with multiplier and factorialResult*/ 0) {
+    /*$$ invoke isSafeMultiply with multiplier and factorialResult*/
+    while (isSafeMultiply(multiplier, factorialResult, factorialResult)) {
         //$$ display the multiplier and the factorial result using field widths of 3 and 27 respectively
         // increment the multiplier
+        cout << std::setw(3) << multiplier << std::setw(27) << factorialResult << endl;
+        ++multiplier;
     }
 
     // calculate timeElapsed as described in the assignment
+    auto timeElapsed = duration_cast<nanoseconds> (steady_clock::now() - timeStart);
 
     //$$ display Unsigned overflow at : multiplier
-    //$$ display Time Elapsed (nano)  : timeElapsed.count()
+    cout << endl << "Unsigned overflow at : " << multiplier << endl;
 
+    //$$ display Time Elapsed (nano)  : timeElapsed.count()
+    cout << "Time Elapsed(nano) : " << timeElapsed.count();
+    
 }//calculateTimeFactorialLoopFunc
 
  //------------------------------------------
 template <class TypeMultiply>
 void factorialRecursiveFunc(TypeMultiply& multiplier, TypeMultiply factorialResult) {
 
-    if (/*$$ invoke isSafeMultiply <TypeMultiply> with multiplier and factorial result)*/ 0) {
+    if (isSafeMultiply(multiplier, factorialResult, factorialResult)) {
         //$$ display the multiplier and the factorial result using field widths of 3 and 27 respectively
+        cout << std::setw(3) << multiplier << std::setw(27) << factorialResult << endl;
+
         //$$ invoke factorialRecursiveFunc with ++multiplier and factorialResult
+        factorialRecursiveFunc(++multiplier, factorialResult);
     }
     return;
 
@@ -63,14 +94,19 @@ template <class TypeMultiply>
 void calculateTimeFactorialRecursiveFunc() {
 
     //$$ set start time
+    auto timeStart = steady_clock::now();
 
     TypeMultiply mult01 = 1;
     factorialRecursiveFunc <TypeMultiply>(mult01, 1);
 
     //$$ set time elapsed 
+    auto timeElapsed = duration_cast<nanoseconds> (steady_clock::now() - timeStart);
 
     //$$ display Unsigned overflow at : mult01
+    cout << endl << "Unsigned overflow at : " << mult01 << endl;
+
     //$$ display Time Elapsed (nano)  : timeElapsed.count()
+    cout << "Time Elapsed(nano) : " << timeElapsed.count();
 
 }//calculateTimeFactorialRecursiveFunc()
 
