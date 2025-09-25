@@ -50,39 +50,50 @@ template <class TypeMultiply>
 void calculateTimeFactorialLoopFunc(void) {
 
     //$$ set  start time  
+
     auto timeStart = steady_clock::now();
 
     TypeMultiply multiplier = 1,
         factorialResult = 1;
 
     /*$$ invoke isSafeMultiply with multiplier and factorialResult*/
+
     while (isSafeMultiply(multiplier, factorialResult, factorialResult)) {
+
         //$$ display the multiplier and the factorial result using field widths of 3 and 27 respectively
         // increment the multiplier
+
         cout << std::setw(3) << multiplier << std::setw(27) << factorialResult << endl;
         ++multiplier;
     }
 
     // calculate timeElapsed as described in the assignment
+
     auto timeElapsed = duration_cast<nanoseconds> (steady_clock::now() - timeStart);
 
     //$$ display Unsigned overflow at : multiplier
+
     cout << endl << "Unsigned overflow at : " << multiplier << endl;
 
     //$$ display Time Elapsed (nano)  : timeElapsed.count()
+
     cout << "Time Elapsed(nano) : " << timeElapsed.count();
     
 }//calculateTimeFactorialLoopFunc
 
  //------------------------------------------
+
 template <class TypeMultiply>
 void factorialRecursiveFunc(TypeMultiply& multiplier, TypeMultiply factorialResult) {
 
     if (isSafeMultiply(multiplier, factorialResult, factorialResult)) {
+
         //$$ display the multiplier and the factorial result using field widths of 3 and 27 respectively
+
         cout << std::setw(3) << multiplier << std::setw(27) << factorialResult << endl;
 
         //$$ invoke factorialRecursiveFunc with ++multiplier and factorialResult
+
         factorialRecursiveFunc(++multiplier, factorialResult);
     }
     return;
@@ -90,22 +101,27 @@ void factorialRecursiveFunc(TypeMultiply& multiplier, TypeMultiply factorialResu
 }//factorialRecursive
 
  //------------------------------------------  
+
 template <class TypeMultiply>
 void calculateTimeFactorialRecursiveFunc() {
 
     //$$ set start time
+
     auto timeStart = steady_clock::now();
 
     TypeMultiply mult01 = 1;
     factorialRecursiveFunc <TypeMultiply>(mult01, 1);
 
     //$$ set time elapsed 
+
     auto timeElapsed = duration_cast<nanoseconds> (steady_clock::now() - timeStart);
 
     //$$ display Unsigned overflow at : mult01
+
     cout << endl << "Unsigned overflow at : " << mult01 << endl;
 
     //$$ display Time Elapsed (nano)  : timeElapsed.count()
+
     cout << "Time Elapsed(nano) : " << timeElapsed.count();
 
 }//calculateTimeFactorialRecursiveFunc()
@@ -117,7 +133,9 @@ private:
     unsigned typeSizeBits;
 
 public:
+
     // Constructor
+
     FactorialCalculationClass(unsigned typeSize) {
         typeSizeBits = typeSize;
      }
@@ -143,7 +161,9 @@ public:
 };// template <class TYPESIZE> class factorialCalculationClass
 
 int main() {
+
     // condition cout set to local digit separation comas (USA)
+
     cout.imbue(locale(""));
 
     /*$$
@@ -167,6 +187,7 @@ int main() {
     factorialCalculateUint64Obj.executeFactorialForType();
 
     // Hold the screen
+
     cout << "Press enter key once or twice to end ... ";
     cin.ignore(); 
     cin.get();
