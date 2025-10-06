@@ -123,7 +123,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Shapes.cpp" />
+    <ClCompile Include="CircleShapeSubClass.h" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\OneDrive - The University of Texas at Dallas\CS 2337 Assignment Instructions\04_assign_Shapes\LineInfo.h" />
+    <ClInclude Include="BasicShapeClass.h" />
+    <ClInclude Include="RectangleShapeSubClass.h" />
+    <ClInclude Include="TriangleShapeSubClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

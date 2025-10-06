@@ -4,7 +4,6 @@
 #include "BasicShapeClass.h"
 #include <iostream>
 
-
 using namespace std;
 
 class CircleShapeSubClass : public BasicShapeClass {

@@ -4,6 +4,8 @@
 #include "BasicShapeClass.h"
 #include <iostream>
 
+using namespace std;
+
 class RectangleShapeSubClass : public BasicShapeClass {
 
 private:

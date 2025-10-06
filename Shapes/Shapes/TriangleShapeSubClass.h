@@ -4,7 +4,10 @@
 #include "BasicShapeClass.h"
 #include <iostream>
 
+using namespace std;
+
 class TriangleShapeSubClass : public BasicShapeClass {
+
 private:
 	
 	double height;

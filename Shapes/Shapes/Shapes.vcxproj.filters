@@ -15,8 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Shapes.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CircleShapeSubClass.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\OneDrive - The University of Texas at Dallas\CS 2337 Assignment Instructions\04_assign_Shapes\LineInfo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicShapeClass.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleShapeSubClass.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleShapeSubClass.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
