@@ -24,7 +24,7 @@ BasicShapeClass** shapeArray = new BasicShapeClass*[SHAPE_COUNT];
 void handleCircleInput();
 void handleRectangleInput();
 void handleTriangleInput();
-void freeMemory();
+void deallocateMemory();
 
 int main()
 {
@@ -98,11 +98,11 @@ int main()
 
 	// Deallocate memory
 
-	freeMemory();
+	deallocateMemory();
 
 	// Hold the screen
 
-	cout << "Press enter key once or twice to end ... ";
+	cout << "\nPress enter key once or twice to end ... ";
 	cin.ignore();
 	cin.get();
 
@@ -255,7 +255,7 @@ void handleTriangleInput() {
 
 }// handleTriangleInput
 
-void freeMemory() {
+void deallocateMemory() {
 	
 	// Delete each array element
 
