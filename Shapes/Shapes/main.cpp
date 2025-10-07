@@ -270,4 +270,4 @@ void deallocateMemory() {
 
 	return;
 
-}// freeMemory
+}// deallocateMemory
