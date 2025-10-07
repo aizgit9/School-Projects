@@ -23,9 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\OneDrive - The University of Texas at Dallas\CS 2337 Assignment Instructions\04_assign_Shapes\LineInfo.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="BasicShapeClass.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -33,6 +30,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="TriangleShapeSubClass.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LineInfo.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

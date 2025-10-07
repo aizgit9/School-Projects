@@ -18,6 +18,7 @@ public:
 	RectangleShapeSubClass(double width, double length) {
 		this->width = width;
 		this->length = length;
+		setArea(calculateArea());
 	}
 
 	double calculateArea() {
@@ -25,6 +26,7 @@ public:
 	}
 	
 	void display() {
+		cout << "\nShape is a Rectangle:\nWidth: " << width << "\nLength: " << length << "\nArea: " << getArea() << endl;
 		return;
 	}
 };

@@ -18,6 +18,7 @@ public:
 	TriangleShapeSubClass(double height, double base) {
 		this->height = height;
 		this->base = base;
+		setArea(calculateArea());
 	}
 
 	double calculateArea() {
@@ -25,6 +26,7 @@ public:
 	}
 
 	void display() {
+		cout << "\nShape is a Triangle:\nHeight: " << height << "\nBase: " << base << "\nArea: " << getArea() << endl;
 		return;
 	}
 };

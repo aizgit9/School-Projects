@@ -16,8 +16,9 @@ public:
 		return area;
 	}
 
-	double setArea(double area) {
+	void setArea(double area) {
 		this->area = area;
+		return;
 	}
 
 	virtual double calculateArea() = 0;

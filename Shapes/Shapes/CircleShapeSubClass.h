@@ -17,6 +17,7 @@ public:
 
 	CircleShapeSubClass(double radius) {
 		this->radius = radius;
+		setArea(calculateArea());
 	}
 
 	double calculateArea() {
@@ -24,6 +25,7 @@ public:
 	}
 
 	void display() {
+		cout << "\nShape is a Circle:\nRadius: " << radius << "\nArea: " << getArea() << endl;
 		return;
 	}
 };

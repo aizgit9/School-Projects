@@ -127,8 +127,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\OneDrive - The University of Texas at Dallas\CS 2337 Assignment Instructions\04_assign_Shapes\LineInfo.h" />
     <ClInclude Include="BasicShapeClass.h" />
+    <ClInclude Include="LineInfo.h" />
     <ClInclude Include="RectangleShapeSubClass.h" />
     <ClInclude Include="TriangleShapeSubClass.h" />
   </ItemGroup>
