@@ -62,6 +62,9 @@ public:
             // Creating a new current node pointer and allocating memory for it
             NodeStackStruct<Type>* currentNodePtr = allocateNodeSafeMemory();
             stackTopNodePtr = currentNodePtr;
+
+            //Assign stackNodeCount
+            stackNodeCount = stackListRef.stackNodeCount;
             
             do {
 
@@ -81,10 +84,6 @@ public:
 
             } while (true);
         }
-        
-
-        //Assign stackNodeCount
-        stackNodeCount = stackListRef.stackNodeCount;
     }
 
     /*
@@ -135,7 +134,25 @@ public:
                        clears the stack that invokes it
     */
     void Clear() {
-        //$$
+        if (stackNodeCount != 0) {
+            NodeStackStruct<Type>* traverseStackPtr;
+            traverseStackPtr = stackTopNodePtr;
+
+            NodeStackStruct<Type>* tempNodePtr;
+
+            do
+            {
+                tempNodePtr = traverseStackPtr->nextNodePtr;
+
+                delete traverseStackPtr;
+
+                traverseStackPtr = tempNodePtr;
+
+            } while (traverseStackPtr != nullptr);
+
+            stackTopNodePtr = nullptr;
+            stackNodeCount = 0;
+        }
     }
 
     // = operator
