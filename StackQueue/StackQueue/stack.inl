@@ -23,8 +23,16 @@ private:
  */
     NodeStackStruct<Type>* allocateNodeSafeMemory(void) {
         NodeStackStruct<Type>* newMemoryPtr;
-        //$$
-        return newMemoryPtr;  //dummy return
+
+        try {
+            newMemoryPtr = new NodeStackStruct<Type>;
+        }
+        catch(std::bad_alloc) {
+            cout << "Failed to allocate memory. Exiting...";
+            exit(0);
+        }
+
+        return newMemoryPtr;
     }
 
     /*
@@ -45,7 +53,38 @@ public:
 
     // copy constructor
     StackListClass(const StackListClass& stackListRef) {
-        //$
+        if (stackListRef.stackTopNodePtr != nullptr) {
+
+            // Creating a new node pointer that is used to traverse stackListRef
+            NodeStackStruct<Type>* traverseStackPtr;
+            traverseStackPtr = stackListRef.stackTopNodePtr;
+
+            // Creating a new current node pointer and allocating memory for it
+            NodeStackStruct<Type>* currentNodePtr = allocateNodeSafeMemory();
+            stackTopNodePtr = currentNodePtr;
+            
+            do {
+
+                currentNodePtr->data = traverseStackPtr->data;
+
+                if (traverseStackPtr->nextNodePtr == nullptr) {
+                    currentNodePtr->nextNodePtr = nullptr;
+                    break;
+                }
+                
+                //Allocate memory for the next node and move currentNodePtr to it
+                currentNodePtr->nextNodePtr = allocateNodeSafeMemory();
+                currentNodePtr = currentNodePtr->nextNodePtr;
+
+                //Assigning the traverse stack pointer to its linked node
+                traverseStackPtr = traverseStackPtr->nextNodePtr;
+
+            } while (true);
+        }
+        
+
+        //Assign stackNodeCount
+        stackNodeCount = stackListRef.stackNodeCount;
     }
 
     /*
@@ -58,19 +97,27 @@ public:
     Outputs:           void
     */
     void Push(Type data) {
-        //$$
+        NodeStackStruct<Type>* newNodePtr = allocateNodeSafeMemory();
+        newNodePtr->data = data;
+        newNodePtr->nextNodePtr = stackTopNodePtr;
+        stackTopNodePtr = newNodePtr;
+        stackNodeCount++;
     }
 
     /*
     Name: Pop()
     Function Purpose : take item out of stack top
-    Function Design:   deallocates old sstack top
+    Function Design:   deallocates old stack top
     Inputs:            none
     Outputs:           TYPE - the removed item from the top of the stack
     */
     Type Pop() {
-        //$$
-        return 0;
+
+        NodeStackStruct<Type>* newTopNodePtr = stackTopNodePtr->nextNodePtr;
+        Type removedItem = stackTopNodePtr->data;
+        delete stackTopNodePtr;
+        stackTopNodePtr = newTopNodePtr;
+        return removedItem;
 
     }
 
