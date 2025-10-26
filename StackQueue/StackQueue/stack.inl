@@ -27,7 +27,7 @@ private:
         try {
             newMemoryPtr = new NodeStackStruct<Type>;
         }
-        catch(std::bad_alloc) {
+        catch(const std::bad_alloc&) {
             cout << "Failed to allocate memory. Exiting...";
             exit(0);
         }

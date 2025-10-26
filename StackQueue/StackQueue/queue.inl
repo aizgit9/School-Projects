@@ -38,7 +38,25 @@ Outputs:           void
   void Enqueue(DATATYPE data) {
     DATATYPE* oldAry;
     oldAry = dynamicAry;
-    //$$
+
+    try {
+        dynamicAry = new DATATYPE[queueElementCount + 1];
+    }
+    catch (const std::bad_alloc&) {
+        cout << "Failed to allocate memory. Exiting...";
+        exit(0);
+    }
+
+    for (int i = 0; i < queueElementCount; i++)
+    {
+        dynamicAry[i] = oldAry[i];
+    }
+
+    dynamicAry[queueElementCount] = data;
+
+    delete[] oldAry;
+
+    queueElementCount++;
   }
 
 /*
