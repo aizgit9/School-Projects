@@ -1,3 +1,12 @@
+/*
+Program Name: Stack Queue
+Date:
+2025-10-26
+Author: Asher Isgitt
+Module Purpose:
+This program demonstrates implementations of stacks and queues and tests their functionality.
+*/
+
 #include <iostream>
 using namespace std;
 
