@@ -67,13 +67,34 @@ Function Design:   allocates new memory for in a dynamic  new array to contain a
                    creates a new dynamic array that holds new queue with front removed
                    deletes the old array
 Inputs:            none
-Outputs:           DTATATYPE - the removed item from the front of the queue
+Outputs:           DATATYPE - the removed item from the front of the queue
 */
   DATATYPE Dequeue() {
     if (queueElementCount == 0)
       return 0;
-    //$$
-    return 0;  //dummy
+
+    DATATYPE* oldAry;
+    oldAry = dynamicAry;
+
+    try {
+        dynamicAry = new DATATYPE[queueElementCount - 1];
+    }
+    catch (const std::bad_alloc&) {
+        cout << "Failed to allocate memory. Exiting..." << endl;
+        exit(0);
+    }
+
+    for (int i = 1; i < queueElementCount; i++)
+    {
+        dynamicAry[i - 1] = oldAry[i];
+    }
+
+    queueElementCount--;
+
+    DATATYPE removedItem = oldAry[0];
+
+    delete[] oldAry;
+    return removedItem;
   }
 
   // operator function operator=(), implements assignment of objects of type QueueListClass
