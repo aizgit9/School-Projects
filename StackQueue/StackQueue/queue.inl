@@ -1,7 +1,7 @@
 template <class DATATYPE>
 class QueueListClass {  
   DATATYPE *dynamicAry = nullptr;        // dynamic array
-  int      queueElementCount;            // number of items in the queue
+  int      queueElementCount = 0;            // number of items in the queue
 
 public:
   // default constructor
@@ -15,14 +15,29 @@ Inputs:            DATATYPE* newAry
                    const QueueListClass sourceQueueObj - source object queue to be copied
 Outputs:           QueueListClass& *this the newly formed queue
 */
-  QueueListClass& CopyToQueueFrom(const QueueListClass &obj) {
-  //$$
+QueueListClass& CopyToQueueFrom(const QueueListClass &obj) {
+    if (queueElementCount != 0) {
+        Clear();
+    }
+
+    dynamicAry = new DATATYPE[obj.queueElementCount];
+
+    for (int i = 0; i < obj.queueElementCount; i++)
+    {
+        dynamicAry[i] = obj.dynamicAry[i];
+        queueElementCount++;
+    }
+    
+
   return *this;
   }
 
   // copy constructor
   QueueListClass(const QueueListClass& QueueListClassObj) {
-    //$$
+
+      queueElementCount = 0;
+
+      CopyToQueueFrom(QueueListClassObj);
   }
 
 /*
@@ -99,8 +114,15 @@ Outputs:           DATATYPE - the removed item from the front of the queue
 
   // operator function operator=(), implements assignment of objects of type QueueListClass
   QueueListClass &operator=(QueueListClass& obj) {
-   //$$
-    return *this;
+      if (this == &obj) {
+          return *this;
+      }
+      
+      Clear();
+
+      CopyToQueueFrom(obj);
+
+      return *this;
   }
 
   // destructor
@@ -116,12 +138,15 @@ Function Design:   checks if queue is empty
                    returns0
                    gets the front item in the queue
 Inputs:            none
-Outputs:           DTATATYPE - the item athe front of the queue
+Outputs:           DATATYPE - the item at the front of the queue
 */
-  DATATYPE Peek() {
-  //$$
-  return 0;   // dummy
-  }
+    DATATYPE Peek() {
+        if (queueElementCount == 0) {
+            return 0;
+        }
+
+        return dynamicAry[0];
+    }
 
 /*
 Name: Clear
@@ -132,7 +157,10 @@ Outputs:           void
                    clears the queue that invokes it
 */
   void Clear() {
-    //$$
+      if (queueElementCount != 0) {
+          delete[] dynamicAry;
+      }
+      queueElementCount = 0;
   }
 
 /*
@@ -147,8 +175,7 @@ Outputs:           bool - true if empty, 0 is not empty
 
   // number items in the QueueListClass
   int getQueueElementCount() {
-    //$$
-	return 0; //dummy
+      return queueElementCount;
   }
 
   // method that displays QueueListClass Objects
