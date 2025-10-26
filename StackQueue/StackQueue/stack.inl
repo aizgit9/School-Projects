@@ -44,28 +44,19 @@ private:
                      const StackListClass& targetStackListRef  - target stack
   */
     void copyToStackFrom(const StackListClass& srcStackListRef) {
-        //$$
-    }
-
-public:
-    // default constructor
-    StackListClass() { stackTopNodePtr = nullptr; }
-
-    // copy constructor
-    StackListClass(const StackListClass& stackListRef) {
-        if (stackListRef.stackTopNodePtr != nullptr) {
+        if (srcStackListRef.stackTopNodePtr != nullptr) {
 
             // Creating a new node pointer that is used to traverse stackListRef
             NodeStackStruct<Type>* traverseStackPtr;
-            traverseStackPtr = stackListRef.stackTopNodePtr;
+            traverseStackPtr = srcStackListRef.stackTopNodePtr;
 
             // Creating a new current node pointer and allocating memory for it
             NodeStackStruct<Type>* currentNodePtr = allocateNodeSafeMemory();
             stackTopNodePtr = currentNodePtr;
 
             //Assign stackNodeCount
-            stackNodeCount = stackListRef.stackNodeCount;
-            
+            stackNodeCount = srcStackListRef.stackNodeCount;
+
             do {
 
                 currentNodePtr->data = traverseStackPtr->data;
@@ -74,7 +65,7 @@ public:
                     currentNodePtr->nextNodePtr = nullptr;
                     break;
                 }
-                
+
                 //Allocate memory for the next node and move currentNodePtr to it
                 currentNodePtr->nextNodePtr = allocateNodeSafeMemory();
                 currentNodePtr = currentNodePtr->nextNodePtr;
@@ -84,6 +75,15 @@ public:
 
             } while (true);
         }
+    }
+
+public:
+    // default constructor
+    StackListClass() { stackTopNodePtr = nullptr; }
+
+    // copy constructor
+    StackListClass(const StackListClass& stackListRef) {
+        copyToStackFrom(stackListRef);
     }
 
     /*
@@ -116,6 +116,8 @@ public:
         Type removedItem = stackTopNodePtr->data;
         delete stackTopNodePtr;
         stackTopNodePtr = newTopNodePtr;
+
+        stackNodeCount--;
         return removedItem;
 
     }
@@ -158,7 +160,17 @@ public:
     // = operator
     StackListClass<Type>& operator=(const StackListClass<Type>& stackListRef) {
         // is target stack not empty, then clear it
-        //$$
+        
+        if (this == &stackListRef) {
+            return *this;
+        }
+
+        Clear();
+
+        copyToStackFrom(stackListRef);
+        
+
+        
         return *this;
     }
 
