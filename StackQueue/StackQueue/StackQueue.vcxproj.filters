@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="queue.inl">
+    <None Include="queue.tpp">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="stack.inl">
+    <None Include="stack.tpp">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

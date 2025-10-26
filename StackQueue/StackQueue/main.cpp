@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 
-#include "stack.inl"
-#include "queue.inl"
+#include "stack.tpp"
+#include "queue.tpp"
 
 int main() {
 

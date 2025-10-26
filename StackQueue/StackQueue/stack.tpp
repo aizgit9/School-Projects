@@ -46,15 +46,10 @@ class StackListClass {
     void copyToStackFrom(const StackListClass& srcStackListRef) {
         if (srcStackListRef.stackTopNodePtr != nullptr) {
 
-            // Creating a new node pointer that is used to traverse stackListRef
             NodeStackStruct<Type>* traverseStackPtr;
             traverseStackPtr = srcStackListRef.stackTopNodePtr;
-
-            // Creating a new current node pointer and allocating memory for it
             NodeStackStruct<Type>* currentNodePtr = allocateNodeSafeMemory();
             stackTopNodePtr = currentNodePtr;
-
-            //Assign stackNodeCount
             stackNodeCount = srcStackListRef.stackNodeCount;
 
             do {
@@ -66,11 +61,9 @@ class StackListClass {
                     break;
                 }
 
-                //Allocate memory for the next node and move currentNodePtr to it
                 currentNodePtr->nextNodePtr = allocateNodeSafeMemory();
                 currentNodePtr = currentNodePtr->nextNodePtr;
 
-                //Assigning the traverse stack pointer to its linked node
                 traverseStackPtr = traverseStackPtr->nextNodePtr;
 
             } while (true);

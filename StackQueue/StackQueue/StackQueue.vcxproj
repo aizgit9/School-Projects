@@ -22,8 +22,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="queue.inl" />
-    <None Include="stack.inl" />
+    <None Include="queue.tpp" />
+    <None Include="stack.tpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
