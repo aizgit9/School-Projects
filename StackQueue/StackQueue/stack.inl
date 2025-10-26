@@ -1,7 +1,7 @@
 // Template class Stack based on a singly linked list
 template <class Type>
 class StackListClass {
-private:
+    private:
 
     // The structure describing the node
     template <class Type>
@@ -14,13 +14,13 @@ private:
     unsigned               stackNodeCount = 0;               // stack node count
 
     /*
- Name: AllocateNodeSafeMemory(void)
- Function Purpose : add item to the queue
- Function Design:   allocates new memory for in a dynamic memory
-                    if not sucessful memory allocation, states the reason and exits
- Inputs:            void
- Outputs:           NodeStackStruct<Type>*
- */
+    Name: AllocateNodeSafeMemory(void)
+    Function Purpose : add item to the queue
+    Function Design:   allocates new memory for in a dynamic memory
+    if not sucessful memory allocation, states the reason and exits
+    Inputs:            void
+    Outputs:           NodeStackStruct<Type>*
+    */
     NodeStackStruct<Type>* allocateNodeSafeMemory(void) {
         NodeStackStruct<Type>* newMemoryPtr;
 
@@ -36,13 +36,13 @@ private:
     }
 
     /*
-  Name: CopyToStackFrom
-  Function Purpose : Copy to a newly formed queue
-  Function Design:   allocates new memory for a new array to contain a copy of the queue
-  Inputs:            const StackListClass& srcStackListRef  -source stack
-  Outputs:           void
-                     const StackListClass& targetStackListRef  - target stack
-  */
+    Name: CopyToStackFrom
+    Function Purpose : Copy to a newly formed queue
+    Function Design:   allocates new memory for a new array to contain a copy of the queue
+    Inputs:            const StackListClass& srcStackListRef  -source stack
+    Outputs:           void
+    const StackListClass& targetStackListRef  - target stack
+    */
     void copyToStackFrom(const StackListClass& srcStackListRef) {
         if (srcStackListRef.stackTopNodePtr != nullptr) {
 
@@ -77,9 +77,11 @@ private:
         }
     }
 
-public:
+    public:
     // default constructor
-    StackListClass() { stackTopNodePtr = nullptr; }
+    StackListClass() {
+        stackTopNodePtr = nullptr; 
+    }
 
     // copy constructor
     StackListClass(const StackListClass& stackListRef) {
@@ -90,8 +92,8 @@ public:
     Name: Push
     Function Purpose : add passed item to the stack top
     Function Design:   allocates new memory for new stack top
-                       use AllocateNodeSafeMemory()
-                       adjust stack node count
+    use AllocateNodeSafeMemory()
+    adjust stack node count
     Inputs:            Type data- the item to put on the stack top
     Outputs:           void
     */
@@ -133,7 +135,7 @@ public:
     Function Design:   if the stack is not empty, it deallocates the stack
     Inputs:            called by the object that invokes it
     Outputs:           void
-                       clears the stack that invokes it
+    clears the stack that invokes it
     */
     void Clear() {
         if (stackNodeCount != 0) {
@@ -166,11 +168,7 @@ public:
         }
 
         Clear();
-
         copyToStackFrom(stackListRef);
-        
-
-        
         return *this;
     }
 
@@ -184,12 +182,13 @@ public:
             transverseStackPtr = stackTopNodePtr;
 
             while (transverseStackPtr != nullptr) {
-                cout << transverseStackPtr->data << endl;
-                transverseStackPtr = transverseStackPtr->nextNodePtr;
+            cout << transverseStackPtr->data << endl;
+            transverseStackPtr = transverseStackPtr->nextNodePtr;
             }
         }//if
-        else
+        else {
             cout << "stack is empty." << endl;
+        }
 
         cout << "stack node count : " << getstackNodeCount() << endl;
         cout << endl << endl;
