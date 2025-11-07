@@ -31,12 +31,14 @@ private:
 public:
 
     //Default Constructor
+
     Graph() {
         numVertices = 0;
         maxSize = 10;
         adjList.resize(maxSize);
     }
     // Initializes the graph max size V
+
     Graph(int V) {
         numVertices = 0;
         maxSize = V;
@@ -44,6 +46,7 @@ public:
     }
 
     // Prints the graph's representation.
+
     void displayGraph() {
 
         for (int i = 1; i <= numVertices; i++)
@@ -64,12 +67,14 @@ public:
         return numVertices == 0;
     }
 
-    //Creates a graph from file
+    //Creates a graph from input file
+
     void createGraph(ifstream& file) {
         file >> numVertices;
         string line;
 
         // Clear the first line
+
         getline(file, line);
         
         int i = 0;
@@ -92,9 +97,11 @@ public:
     }
 
     // Returns true if graph is connected, returns false otherwise
+
     bool isConnected() {
 
         // Conduct depth first search starting from each vertex in adjList
+
         for (int vertex = 1; vertex <= numVertices; vertex++)
         {
             vector<bool> visitedVertices(numVertices + 1);
@@ -113,10 +120,12 @@ public:
     }
 
     void depthFirstSearch(int vertex, vector<bool>& visited) {
+
         // Mark current vertex as visited
-        // Loop through adjancent vertices and recurse on each
 
         visited[vertex] = true;
+
+        // Loop through adjancent vertices and recurse on each
 
         for (int v : adjList[vertex])
         {
@@ -127,42 +136,40 @@ public:
     }
 };
 
+// Driver program to test Graph class
+
+int main()
+{
+    ifstream file("graphs.txt");
 
 
-
-    // Driver program to test Graph class
-    int main()
-    {
-        ifstream file("graphs.txt");
-
-
-        if (!file) { // Check if the file opened successfully
-            cout << "File not opened successfully!" << endl;
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            Graph* newGraph = new Graph();
-
-            newGraph->createGraph(file);
-
-            cout << "Graph " << i + 1 << ":" << endl;
-            newGraph->displayGraph();
-
-            if (newGraph->isEmpty()) {
-                cout << "Graph is empty!" << endl << endl;
-            }
-
-            if (newGraph->isConnected()) {
-                cout << "Graph is connected." << endl << endl;
-            }
-            else {
-                cout << "Graph is not connected." << endl << endl;
-            }
-
-            delete newGraph;
-        }
-
-        return 0;
+    if (!file) { // Check if the file opened successfully
+        cout << "File not opened successfully!" << endl;
     }
+
+    for (int i = 0; i < 3; i++)
+    {
+        Graph* newGraph = new Graph();
+
+        newGraph->createGraph(file);
+
+        cout << "Graph " << i + 1 << ":" << endl;
+        newGraph->displayGraph();
+
+        if (newGraph->isEmpty()) {
+            cout << "Graph is empty!" << endl << endl;
+        }
+
+        if (newGraph->isConnected()) {
+            cout << "Graph is connected." << endl << endl;
+        }
+        else {
+            cout << "Graph is not connected." << endl << endl;
+        }
+
+        delete newGraph;
+    }
+
+    return 0;
+};
 
