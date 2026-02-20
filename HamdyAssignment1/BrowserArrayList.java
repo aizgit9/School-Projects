@@ -1,4 +1,5 @@
 import java.util.ConcurrentModificationException;
+import java.util.NoSuchElementException;
 
 // List implementation using a circular array
 public class BrowserArrayList<AnyType> implements Iterable<AnyType>
@@ -14,9 +15,25 @@ public class BrowserArrayList<AnyType> implements Iterable<AnyType>
     {
         theItems = (AnyType[]) new Object[10];
          
+        doClear();
+    }
+
+    public void clear()
+    {
+        doClear();
+    }
+
+    private void doClear()
+    {
+        for (int i = 0; i < theSize; i++) 
+        {
+            theItems[i] = null;
+        }
+
+        theSize = 0;
         front = 0;
         back = 0;
-        theSize = 0;
+        modCount++;
     }
 
     // Appends an item to the front of the array
@@ -160,6 +177,11 @@ public class BrowserArrayList<AnyType> implements Iterable<AnyType>
         @Override
         public AnyType next()
         {
+            if(current >= back)
+            {
+                throw new NoSuchElementException();
+            }
+
             if (expectedModCount != modCount)
             {
                 throw new ConcurrentModificationException();

@@ -30,6 +30,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
     {
         head = new Node<>(null, null, null);
         tail = new Node<>(null, head, null);
+
         head.next = tail;
 
         modCount++;
@@ -97,7 +98,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
         */ 
         if(index < size() / 2)
         {
-            p = head;
+            p = head.next;
             for(int i = 0; i < index; i++)
             {
                 p = p.next;
@@ -117,16 +118,20 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
     }
 
     // Removes the node at index
-    public void remove(int index)
+    public AnyType remove(int index)
     {
-        removeNode(getNode(index));
+        Node<AnyType> nodeToRemove = getNode(index);
+        AnyType removedData = nodeToRemove.data;
+        removeNode(nodeToRemove);
+
+        return removedData;
     }
 
     // Removes the node p
     private void removeNode(Node<AnyType> p)
     {
-        p.prev.next = null;
-        p.next.prev = null;
+        p.prev.next = p.next; // Previous node skips p and points to p's next
+        p.next.prev = p.prev; // Next node skips p and points back to p's prev
 
         theSize--;
         modCount++;
@@ -165,7 +170,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
                 throw new ConcurrentModificationException();
             }
 
-            return current.next != null;
+            return current != tail;
         }
         
         // Returns the current data and moves current to the next node
