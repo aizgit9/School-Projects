@@ -1,20 +1,30 @@
+import java.util.Iterator;
+
 public class Main
 {
     public static void main(String[] args)
     {
-        BrowserLinkedList<Integer> testList = new BrowserLinkedList<>();
+        BrowserArrayList<Integer> arr = new BrowserArrayList<>();
 
-        testList.add(1);
-        testList.add(3);
-        testList.add(17);
-        testList.add(89);
-        testList.add(123);
-
-        java.util.Iterator<Integer> testIt = testList.iterator();
-
-        while(testIt.hasNext())
-        {
-            System.out.println(testIt.next());
+        for (int i = 0; i < 20; i++) {
+            arr.addToBack(i);
         }
+
+        arr.popFromFront();
+        arr.popFromFront();
+
+        int item = arr.get(17);
+        System.out.println(item);
+
+        Iterator<Integer> it = arr.iterator();
+
+        while(it.hasNext())
+        {
+            System.out.println(it.next());
+        }
+
+
+
+
     }
 }

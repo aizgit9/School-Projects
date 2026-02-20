@@ -3,27 +3,14 @@ import java.util.NoSuchElementException;
 
 public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
 {
-    // Pointer to the beginning of the list
-    private Node<AnyType> head;
-
-    // Pointer to the end of the list
-    private Node<AnyType> tail;
-
-    // List size
+    private Node<AnyType> head; // Pointer to the beginning of the list
+    private Node<AnyType> tail; // Pointer to the end of the list
     private int theSize;
-
-    // Total amount of modifications to detect tampering
-    private int modCount = 0;
+    private int modCount = 0; // Total amount of modifications to detect tampering
 
     public BrowserLinkedList()
     {
         doClear();
-    }
-
-    @Override
-    public java.util.Iterator<AnyType> iterator()
-    {
-        return new BrowserLinkedListIterator();
     }
 
     // Returns the list size
@@ -138,29 +125,34 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
         modCount++;
     }
 
+    @Override
+    public java.util.Iterator<AnyType> iterator()
+    {
+        return new BrowserLinkedListIterator();
+    }
+
     /* 
     Iterator used to traverse the list
     !! Do not initialize until all modifications have been completed !!
     */
     private class BrowserLinkedListIterator implements java.util.Iterator<AnyType>
     {
-        // Pointer to the node the iterator is looking at
-        private Node<AnyType> current;
-
-        // Used to store modCount at iterator initialization
-        private final int initModCount = modCount; 
+        
+        private Node<AnyType> current; // Pointer to the node the iterator is looking at
+        private int expectedModCount; // Used to store modCount at iterator initialization
 
         // Current starts at the first node
         public BrowserLinkedListIterator()
         {
             current = head.next;
+            expectedModCount = modCount;
         }
 
         // Returns true if the next node is not null, false otherwise
         @Override
         public boolean hasNext()
         {
-            if (initModCount != modCount)
+            if (expectedModCount != modCount)
             {
                 throw new ConcurrentModificationException();
             }
@@ -177,7 +169,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
                 throw new NoSuchElementException();
             }
 
-            if (initModCount != modCount)
+            if (expectedModCount != modCount)
             {
                 throw new ConcurrentModificationException();
             }
