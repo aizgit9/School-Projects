@@ -51,11 +51,18 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
         return oldData;
 
     }
+    
     // Adds a node from data before tail
-    public void add(AnyType data)
+    public void addtoBack(AnyType data)
     {
         addBefore(getNode(size()), data);
     }
+
+    // Adds a node from data after head
+    public void addtoFront(AnyType data)
+    {
+        addBefore(head.next, data);
+    } 
 
     // Creates a new node from data before p
     private void addBefore(Node<AnyType> p, AnyType data)
@@ -139,6 +146,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
     {
         
         private Node<AnyType> current; // Pointer to the node the iterator is looking at
+        @SuppressWarnings("FieldMayBeFinal")
         private int expectedModCount; // Used to store modCount at iterator initialization
 
         // Current starts at the first node

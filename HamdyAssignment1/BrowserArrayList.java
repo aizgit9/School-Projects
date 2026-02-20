@@ -135,6 +135,7 @@ public class BrowserArrayList<AnyType> implements Iterable<AnyType>
     private class BrowserArrayListIterator implements java.util.Iterator<AnyType>
     {   
         int current;
+        @SuppressWarnings("FieldMayBeFinal")
         private int expectedModCount; 
 
         public BrowserArrayListIterator()
