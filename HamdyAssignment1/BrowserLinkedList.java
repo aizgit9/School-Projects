@@ -143,13 +143,17 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
         return new BrowserLinkedListIterator();
     }
 
+    public java.util.Iterator<AnyType> stackIterator()
+    {
+        return new StackIterator();
+    }
+
     /* 
     Iterator used to traverse the list
     !! Do not initialize until all modifications have been completed !!
     */
     private class BrowserLinkedListIterator implements java.util.Iterator<AnyType>
     {
-        
         private Node<AnyType> current; // Pointer to the node the iterator is looking at
         @SuppressWarnings("FieldMayBeFinal")
         private int expectedModCount; // Used to store modCount at iterator initialization
@@ -189,6 +193,52 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
             
             AnyType data = current.data;
             current = current.next;
+            return data;
+        }
+    }
+
+     // Iterates through the list from the bottom up
+    private class StackIterator implements java.util.Iterator<AnyType>
+    {   
+        private Node<AnyType> current; // Pointer to the node the iterator is looking at
+        @SuppressWarnings("FieldMayBeFinal")
+        private int expectedModCount; // Used to store modCount at iterator initialization
+
+        // Current starts at the first node
+        public StackIterator()
+        {
+            current = tail.prev;
+            expectedModCount = modCount;
+        }
+
+        // Returns true if the next node is not null, false otherwise
+        @Override
+        public boolean hasNext()
+        {
+            if (expectedModCount != modCount)
+            {
+                throw new ConcurrentModificationException();
+            }
+
+            return current != head;
+        }
+        
+        // Returns the current data and moves current to the next node
+        @Override
+        public AnyType next()
+        {
+            if(current == null)
+            {
+                throw new NoSuchElementException();
+            }
+
+            if (expectedModCount != modCount)
+            {
+                throw new ConcurrentModificationException();
+            }
+            
+            AnyType data = current.data;
+            current = current.prev;
             return data;
         }
     }

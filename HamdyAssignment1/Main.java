@@ -9,7 +9,10 @@ public class Main
         BrowserNavigation navigator = new BrowserNavigation();
 
         System.out.println("Browser active. Type 'help' for a list of commands.");
+        navigator.restoreLastSession();
+        
 
+        // User Interaction Loop
         OUTER:
         while (true) {
             String input = reader.nextLine();
@@ -23,32 +26,37 @@ public class Main
 
             switch (input) 
             {
-                case "exit":
+                case "exit" -> 
+                {
+                    navigator.closeBrowser();
                     break OUTER;
-                case "back":
+                }
+                case "back" -> 
+                {
                     navigator.goBack();
-                    continue;
-                case "forward":
+                }
+                case "forward" -> 
+                {
                     navigator.goForward();
-                    continue;
-                case "show history":
+                }
+                case "show history" -> 
+                {
                     navigator.showHistory();
-                    continue;
-                case "clear history":
+                }
+                case "clear history" -> 
+                {
                     navigator.clearHistory();
-                    continue;
-                case "help":
+                }
+                case "help" -> {
                     System.out.println("COMMANDS:");
                     System.out.println("visit <url>         Navigates to the web page at <url>.");
-                    System.out.println("exit                Closes the browser.");
+                    System.out.println("exit                Closes the browser and saves browser state.");
                     System.out.println("back                Navigates to the previous web page.");
                     System.out.println("forward             Navigates to the next web page.");
                     System.out.println("show history        Displays browsing history");
-                    System.out.println("clear history       Clears browsing history.");
-                    continue;
-                default:
-                    System.out.println("Invalid input. Try again!");
-                    break;
+                    System.out.println("clear history       Clears all browsing history.");
+                }
+                default -> System.out.println("Invalid input. Try again!");
             }
         }
         

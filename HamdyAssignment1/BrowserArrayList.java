@@ -25,7 +25,7 @@ public class BrowserArrayList<AnyType> implements Iterable<AnyType>
 
     private void doClear()
     {
-        for (int i = 0; i < theSize; i++) 
+        for (int i = 0; i < theItems.length; i++) 
         {
             theItems[i] = null;
         }

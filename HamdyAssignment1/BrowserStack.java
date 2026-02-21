@@ -51,6 +51,6 @@ public class BrowserStack<AnyType> implements Iterable<AnyType>
     @Override
     public java.util.Iterator<AnyType> iterator()
     {
-        return stackList.iterator();
+        return stackList.stackIterator();
     }
 }
