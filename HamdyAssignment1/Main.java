@@ -104,6 +104,7 @@ public class Main {
             testNavigator.goForward();
         }
 
+        // Test closing and reloading
         testNavigator.closeBrowser("testsavestate.txt");
         testNavigator.restoreLastSession("testsavestate.txt");
         testNavigator.closeBrowser("testsavestate.txt");
