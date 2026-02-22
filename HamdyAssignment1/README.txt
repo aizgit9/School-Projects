@@ -1,6 +1,8 @@
 Name: Asher Isgitt
 NetID: dal167894
 Section: 501
+Professor: Omar Hamdy
+Date: 2/21/2026
 
 IMPLEMENTATION CHOICES
 

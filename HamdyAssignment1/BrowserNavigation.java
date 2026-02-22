@@ -187,7 +187,7 @@ public class BrowserNavigation {
         if (currentPage != null) { return ("Now at [" + currentPage + "]"); }
 
         // There is no currentPage
-        return "";
+        return "No previous session was found. Starting new browsing session.";
     }
 
     // Helper method for restoreLastSession that updates what save data section the reader is in
