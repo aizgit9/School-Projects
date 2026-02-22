@@ -18,7 +18,8 @@ the custom StackIterator as a nested class in the BrowserLinkedList class. All o
 
 BrowserStack and BrowserQueue:
 I kept these fairly minimal, they are both wrappers of their respective underlying data structures. The most notable thing
-is that the BrowserStack returns the StackIterator from its parent instead of the basic list iterator.
+is that the BrowserStack returns the StackIterator from its parent instead of the basic list iterator. Trying to pop from
+an empty stack will throw an EmptyStackException, as requested.
 
 BrowserNavigation:
 I chose to add an openWebpage method that opens the URL on your default browser. I used a text file (savestate.txt) to save the browsing
@@ -30,6 +31,12 @@ Main:
 To test the browser navigation, I made a simple command line interface that allows the user to visit urls and browse back and forth.
 When the user exits the program, all data is saved and ready to be reloaded in the next session. I wanted this system to be as user
 friendly as possible, so I included a help function that displays all the commands.
+I also built a simple testing function that stress tests the basic browser functions. It writes save data to a separate file to avoid
+interference with user browsing. After testing, I verified the save file to ensure everything was working correctly.
+
+Save files:
+Stacks are saved in reverse to facilitate session restoration, using the custom StackIterator. There are two save files, one for
+testing and one for user browsing sessions.
 
 TIME COMPLEXITIES
 

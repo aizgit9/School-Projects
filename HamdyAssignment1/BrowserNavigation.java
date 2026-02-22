@@ -19,24 +19,36 @@ public class BrowserNavigation {
     private BrowserStack<String> backStack;
     private BrowserStack<String> forwardStack;
     private String currentPage;
+    private boolean allowWebpageOpening = true;
 
     /* 
     Attempts to open the webpage from the given URL in the system default browser
     Returns a status message O(1)
     */
-
     public String openWebpage(String url) {
-        
-        // Checks if Desktop browsing is supported on the platform
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+        if(allowWebpageOpening) {
+            // Checks if Desktop browsing is supported on the platform
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 
-            // Tries to open the url on the default browser
-            try { Desktop.getDesktop().browse(new URI(url)); }
-            catch(URISyntaxException | IOException e) { return "Failed to open web page with given URL."; }
-        } 
-        else return "Desktop browsing is not supported on this platform.";
+                // Tries to open the url on the default browser
+                try { Desktop.getDesktop().browse(new URI(url)); }
+                catch(URISyntaxException | IOException e) { return "Failed to open web page with given URL."; }
+            } 
+            else return "Desktop browsing is not supported on this platform.";
 
-        return "Web page opened successfully!";
+            return "Web page opened successfully!";
+        }
+
+        return "Web page opening disabled.";
+    }
+
+    // Enables and disables the openWebPage method, returns a status message
+    public String toggleWebpageOpen() { 
+        allowWebpageOpening = !allowWebpageOpening; 
+        if(allowWebpageOpening) {
+            return "Web pages will open in the default browser.";
+        }
+        return "Web page opening in the default browser is disabled for testing";
     }
 
     // Default constructor
@@ -71,6 +83,7 @@ public class BrowserNavigation {
         // Will throw an error if stack is empty
         currentPage = backStack.pop();
 
+
         return "Now at [" + currentPage + "]\n" + openWebpage(currentPage);
     }
 
@@ -103,13 +116,15 @@ public class BrowserNavigation {
         forwardStack.clear();
     }
 
-    // Tries to save all tracked data in the savestate file O(n)
-    public void closeBrowser() {
-        String fileName = "savestate.txt";
+    /* 
+    Tries to save all tracked data in the savestate file O(n)
+    Clears stacks and queue
+    */ 
+    public void closeBrowser(String fileName) {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
 
             // Adds a section head and saves the current page
-            writer.write("currentPage\n" + currentPage +"\n");
+            if(currentPage != null) writer.write("currentPage\n" + currentPage +"\n");
             
             // Section header for easy parsing later
             writer.write("backStack\n");
@@ -138,11 +153,11 @@ public class BrowserNavigation {
         catch(IOException e) {
             System.out.println("Error: could not write to file");
         }
+        clearHistory();
     }
 
     // Tries to load all saved data from file into memory, returns a status message O(n)
-    public String restoreLastSession() {
-        String fileName = "savestate.txt";
+    public String restoreLastSession(String fileName) {
 
         // Try to read the file using BufferedReader
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -156,7 +171,13 @@ public class BrowserNavigation {
                 Helper methods create a rudimentary state machine
                 They categorize each line of the file and load it into the correct place
                 */ 
-                section = updateSection(line, section);
+                int newSection = updateSection(line, section);
+                
+                // Makes sure header labels are not read as URLs
+                if(section != newSection) {
+                    section = newSection;
+                    continue;
+                }
                 parseLine(line, section);
             }
         }
