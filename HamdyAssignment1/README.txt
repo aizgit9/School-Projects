@@ -63,7 +63,7 @@ Setting is a simple indexed overwrite and is a constant time operation.
 
 BrowserLinkedList:
 clear - O(1)
-Clearing happens in constant time because only only the head and tail pointers have to be nulled out to send the entire list to
+Clearing happens in constant time because only the head and tail pointers have to be nulled out to send the entire list to
 garbage collection.
 get - O(n)
 Get is in linear time because the program has to search through every node to get to the correct index. 
@@ -115,5 +115,5 @@ peek - O(1)
 Get is usually in linear time because the program has to search through every node to get to the correct index. Even though
 the underlying function in the linkedList has a linear search, the peek always happens at index 0 so it is irrelevant.
 clear - O(1)
-Clearing happens in constant time because only only the head and tail pointers have to be nulled out to send the entire list to
+Clearing happens in constant time because only the head and tail pointers have to be nulled out to send the entire list to
 garbage collection.
