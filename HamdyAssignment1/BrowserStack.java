@@ -1,56 +1,42 @@
-public class BrowserStack<AnyType> implements Iterable<AnyType>
-{
-    @SuppressWarnings("FieldMayBeFinal")
-    private BrowserLinkedList<AnyType> stackList;
+/*
+File Name:  BrowserArrayList.java
+Date:       2/21/2026
+Author:     Asher Isgitt
+Purpose:    Stack implementation using a linked list
+*/
 
-    public BrowserStack()
-    {
-        stackList = new BrowserLinkedList<>();
-    }
+public class BrowserStack<AnyType> implements Iterable<AnyType> {
 
-    public void push(AnyType data)
-    {
-        stackList.addtoFront(data);
-    }
+    private BrowserLinkedList<AnyType> stackList; // Internal linked list
 
-    public AnyType pop()
-    {
-        if(isEmpty())
-        {
-            throw new java.util.EmptyStackException();
-        }
+    // Defualt constructor
+    public BrowserStack() { stackList = new BrowserLinkedList<>(); }
 
+    // Pushes some data to the top of the stack O(1)
+    public void push(AnyType data) { stackList.addFront(data); }
+
+    // Pops some data from the top of the stack and returns it O(1)
+    public AnyType pop() {
+        if(isEmpty()) throw new java.util.EmptyStackException();
         return stackList.remove(0);
     }
 
-    public AnyType peek()
-    {
-        if(isEmpty())
-        {
-            throw new java.util.EmptyStackException();
-        }
-
+    // Returns the data from the top of the stack O(1)
+    public AnyType peek() {
+        if(isEmpty()) throw new java.util.EmptyStackException();
         return stackList.get(0);
     }
 
-    public int size()
-    {
-        return stackList.size();
-    }
+    // Returns the size of the stack O(1)
+    public int size() { return stackList.size(); }
 
-    public boolean isEmpty()
-    {
-        return stackList.size() == 0;
-    }
+    // Checks if the stack is empty O(1)
+    public boolean isEmpty() { return stackList.size() == 0; }
 
-    public void clear()
-    {
-        stackList.clear();
-    }
+    // Clears the stack O(1)
+    public void clear() { stackList.clear(); }
 
+    // Returns the special StackIterator 
     @Override
-    public java.util.Iterator<AnyType> iterator()
-    {
-        return stackList.stackIterator();
-    }
+    public java.util.Iterator<AnyType> iterator() { return stackList.stackIterator(); }
 }

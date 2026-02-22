@@ -1,46 +1,36 @@
+/*
+File Name:  BrowserArrayList.java
+Date:       2/21/2026
+Author:     Asher Isgitt
+Purpose:    Queue implementation using a circular array
+*/
+
 public class BrowserQueue<AnyType> implements Iterable<AnyType>
 {
-    @SuppressWarnings("FieldMayBeFinal")
-    private BrowserArrayList<AnyType> queueList;
+    private BrowserArrayList<AnyType> queueList; // Internal circular arrayList
 
-    public BrowserQueue()
-    {
-        queueList = new BrowserArrayList<>();
-    }
+    // Default constructor
+    public BrowserQueue() { queueList = new BrowserArrayList<>(); }
 
-    public void enqueue(AnyType item)
-    {
-        queueList.addToBack(item);
-    }
+    // Adds an item to the back of the queue O(1)
+    public void enqueue(AnyType item) { queueList.addBack(item); }
 
-    public AnyType dequeue()
-    {
-        return queueList.popFromFront();    
-    }
+    // Pops an item from the front of the queue and returns it O(1)
+    public AnyType dequeue() { return queueList.popFront(); }
 
-    public AnyType peek()
-    {
-        return queueList.get(0);
-    }
+    // Returns the item from the front of the queue O(1)
+    public AnyType peek() { return queueList.get(0); }
 
-    public boolean isEmpty()
-    {
-        return queueList.size() == 0;
-    }
+    // Checks if the queue is empty O(1)
+    public boolean isEmpty() { return queueList.size() == 0; }
 
-    public int size()
-    {
-        return queueList.size();
-    }
+    // Returns the size of the queue O(1)
+    public int size() { return queueList.size(); }
 
-    public void clear()
-    {
-        queueList.clear();
-    }
+    // Clears the queue O(n)
+    public void clear() { queueList.clear(); }
 
+    // Returns the iterator
     @Override
-    public java.util.Iterator<AnyType> iterator()
-    {
-        return queueList.iterator();
-    }
+    public java.util.Iterator<AnyType> iterator() { return queueList.iterator(); }
 }

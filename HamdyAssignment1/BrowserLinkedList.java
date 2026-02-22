@@ -1,3 +1,10 @@
+/*
+File Name:  BrowserArrayList.java
+Date:       2/21/2026
+Author:     Asher Isgitt
+Purpose:    List implementation using a doubly linked list
+*/
+
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
@@ -8,43 +15,27 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
     private int theSize;
     private int modCount = 0; // Total amount of modifications to detect tampering
 
-    public BrowserLinkedList()
-    {
-        doClear();
-    }
+    public BrowserLinkedList() { doClear(); }
 
-    // Returns the list size
-    public int size()
-    {
-        return theSize;
-    }
+    // Returns the list size O(1)
+    public int size() { return theSize; }
 
-    // Public clear method
-    public void clear()
-    {
-        doClear();
-    }
+    // Public clear method O(1)
+    public void clear() { doClear(); }
 
-    // Removes references to head and tail, clearing the list
-    private void doClear()
-    {
+    // Removes references to head and tail, clearing the list O(1)
+    private void doClear() {
         head = new Node<>(null, null, null);
         tail = new Node<>(null, head, null);
-
         head.next = tail;
-
         modCount++;
-
         theSize = 0;
     }
 
-    // Overwrites the node at index data with new data
-    public AnyType set(int index, AnyType data)
-    {
-        return setNode(getNode(index), data);
-    }
+    // Overwrites the node at index data with new data  O(n)
+    public AnyType set(int index, AnyType data) { return setNode(getNode(index), data); }
 
-    // Overwrites p's data with new data
+    // Overwrites p's data with new data  O(1)
     private AnyType setNode(Node<AnyType> p, AnyType data)
     {
         AnyType oldData = p.data;
@@ -53,39 +44,27 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
 
     }
     
-    // Adds a node from data before tail
-    public void addtoBack(AnyType data)
-    {
-        addBefore(getNode(size()), data);
-    }
+    // Adds a node from data before tail  O(1)
+    public void addBack(AnyType data) { addBefore(tail, data); }
 
-    // Adds a node from data after head
-    public void addtoFront(AnyType data)
-    {
-        addBefore(head.next, data);
-    } 
+    // Adds a node from data after head O(1)
+    public void addFront(AnyType data) { addBefore(head.next, data); } 
 
-    // Creates a new node from data before p
-    private void addBefore(Node<AnyType> p, AnyType data)
-    {
+    // Creates a new node from data before p O(1)
+    private void addBefore(Node<AnyType> p, AnyType data) {
         Node<AnyType> newNode = new Node<>(data, p.prev, p);
-
         p.prev.next = newNode;
         p.prev = newNode;
-
         theSize++;
     }
 
-    // Returns the data of the node at index
-    public AnyType get(int index)
-    {
-        return getNode(index).data;
-    }
+    // Returns the data of the node at index O(n)
+    public AnyType get(int index) { return getNode(index).data; }
 
-    // Returns the node at index
+    // Returns the node at index O(n)
     private Node<AnyType> getNode(int index)
     {
-        if(index < 0 || index > size())
+        if(index < 0 || index >= size())
         {
             throw new IndexOutOfBoundsException();
         }
@@ -117,125 +96,90 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
         return p;
     }
 
-    // Removes the node at index
-    public AnyType remove(int index)
-    {
+    // Removes the node at index  O(n)
+    public AnyType remove(int index) {
         Node<AnyType> nodeToRemove = getNode(index);
         AnyType removedData = nodeToRemove.data;
         removeNode(nodeToRemove);
-
         return removedData;
     }
 
-    // Removes the node p
-    private void removeNode(Node<AnyType> p)
-    {
+    // Removes the node p O(1)
+    private void removeNode(Node<AnyType> p) {
         p.prev.next = p.next; // Previous node skips p and points to p's next
         p.next.prev = p.prev; // Next node skips p and points back to p's prev
-
         theSize--;
         modCount++;
     }
 
     @Override
-    public java.util.Iterator<AnyType> iterator()
-    {
-        return new BrowserLinkedListIterator();
-    }
+    public java.util.Iterator<AnyType> iterator() { return new BrowserLinkedListIterator(); }
 
-    public java.util.Iterator<AnyType> stackIterator()
-    {
-        return new StackIterator();
-    }
+    public java.util.Iterator<AnyType> stackIterator() { return new StackIterator(); }
 
     /* 
     Iterator used to traverse the list
     !! Do not initialize until all modifications have been completed !!
     */
-    private class BrowserLinkedListIterator implements java.util.Iterator<AnyType>
-    {
+    private class BrowserLinkedListIterator implements java.util.Iterator<AnyType> {
         private Node<AnyType> current; // Pointer to the node the iterator is looking at
-        @SuppressWarnings("FieldMayBeFinal")
         private int expectedModCount; // Used to store modCount at iterator initialization
 
         // Current starts at the first node
-        public BrowserLinkedListIterator()
-        {
+        public BrowserLinkedListIterator() {
             current = head.next;
             expectedModCount = modCount;
         }
 
-        // Returns true if the next node is not null, false otherwise
+        // Returns true if the next node is not null, false otherwise O(1)
         @Override
-        public boolean hasNext()
-        {
-            if (expectedModCount != modCount)
-            {
-                throw new ConcurrentModificationException();
-            }
+        public boolean hasNext() {
+            if (expectedModCount != modCount) throw new ConcurrentModificationException();
 
             return current != tail;
         }
         
-        // Returns the current data and moves current to the next node
+        // Returns the current data and moves current to the next node O(1)
         @Override
-        public AnyType next()
-        {
-            if(current == null)
-            {
-                throw new NoSuchElementException();
-            }
+        public AnyType next() {
+            if(current == null) throw new NoSuchElementException();
 
-            if (expectedModCount != modCount)
-            {
-                throw new ConcurrentModificationException();
-            }
-            
+            if (expectedModCount != modCount) throw new ConcurrentModificationException();
+
             AnyType data = current.data;
             current = current.next;
             return data;
         }
     }
 
-     // Iterates through the list from the bottom up
-    private class StackIterator implements java.util.Iterator<AnyType>
-    {   
+    /* 
+    Iterates through the list from the bottom up
+    Alternate iterator used to traverse the list
+    !! Do not initialize until all modifications have been completed !!
+    */
+    private class StackIterator implements java.util.Iterator<AnyType> {   
         private Node<AnyType> current; // Pointer to the node the iterator is looking at
-        @SuppressWarnings("FieldMayBeFinal")
         private int expectedModCount; // Used to store modCount at iterator initialization
 
         // Current starts at the first node
-        public StackIterator()
-        {
+        public StackIterator() {
             current = tail.prev;
             expectedModCount = modCount;
         }
 
-        // Returns true if the next node is not null, false otherwise
+        // Returns true if the next node is not null, false otherwise O(1)
         @Override
-        public boolean hasNext()
-        {
-            if (expectedModCount != modCount)
-            {
-                throw new ConcurrentModificationException();
-            }
-
+        public boolean hasNext() {
+            if (expectedModCount != modCount) throw new ConcurrentModificationException(); // Checks for changes
             return current != head;
         }
         
-        // Returns the current data and moves current to the next node
+        // Returns the current data and moves current to the next node O(1)
         @Override
-        public AnyType next()
-        {
-            if(current == null)
-            {
-                throw new NoSuchElementException();
-            }
+        public AnyType next() {
+            if(current == null) throw new NoSuchElementException();
 
-            if (expectedModCount != modCount)
-            {
-                throw new ConcurrentModificationException();
-            }
+            if (expectedModCount != modCount) throw new ConcurrentModificationException(); // Checks for changes
             
             AnyType data = current.data;
             current = current.prev;
@@ -250,8 +194,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
         public Node<AnyType> prev; // Pointer to previous node
         public Node<AnyType> next; // Pointer to next node
 
-        public Node(AnyType data, Node<AnyType> prev, Node<AnyType> next)
-        {
+        public Node(AnyType data, Node<AnyType> prev, Node<AnyType> next) {
             this.data = data;
             this.prev = prev;
             this.next = next;

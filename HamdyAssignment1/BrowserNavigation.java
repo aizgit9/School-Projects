@@ -1,3 +1,10 @@
+/*
+File Name:  BrowserArrayList.java
+Date:       2/21/2026
+Author:     Asher Isgitt
+Purpose:    Navigator class that uses queue and stack to simulate web browsing
+*/
+
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -6,198 +13,180 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Iterator;
 
-public class BrowserNavigation
-{
+public class BrowserNavigation {
     private BrowserQueue<String> historyQueue;
     private BrowserStack<String> backStack;
     private BrowserStack<String> forwardStack;
     private String currentPage;
 
+    /* 
+    Attempts to open the webpage from the given URL in the system default browser
+    Returns a status message O(1)
+    */
 
-    public boolean openWebpage(String urlString) {
-        // Check if Desktop is supported on the current platform
+    public String openWebpage(String url) {
+        
+        // Checks if Desktop browsing is supported on the platform
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 
-            try
-            {
-                Desktop.getDesktop().browse(new URI(urlString));
-            }
-            catch(URISyntaxException | IOException e)
-            {
-                System.out.println("Failed to open web page with given URL.");
-                return false;
-            }
+            // Tries to open the url on the default browser
+            try { Desktop.getDesktop().browse(new URI(url)); }
+            catch(URISyntaxException | IOException e) { return "Failed to open web page with given URL."; }
         } 
-        else 
-        {
-            System.out.println("Desktop browsing is not supported on this platform.");
-        }
+        else return "Desktop browsing is not supported on this platform.";
 
-        return true;
+        return "Web page opened successfully!";
     }
 
-    public BrowserNavigation()
-    {
+    // Default constructor
+    public BrowserNavigation() {
         historyQueue = new BrowserQueue<>();
         backStack = new BrowserStack<>();
         forwardStack = new BrowserStack<>();
         currentPage = null;
     }
 
-    public void visitWebsite(String url)
-    {
-        if(currentPage != null)
-        {
-            backStack.push(currentPage);
-        }  
-
+    /*
+    Moves the current page to url and saves old page on the backStack and historyQueue
+    Returns a status message O(1)
+    */
+    public String visitWebsite(String url) {
+        if(currentPage != null) backStack.push(currentPage);
         currentPage = url;
 
         historyQueue.enqueue(currentPage);
         forwardStack.clear();
 
-        System.out.println("Now at [" + currentPage + "]");
-        //openWebpage(currentPage);
+        return "Now at [" + currentPage + "]\n" + openWebpage(currentPage);
     }
 
-    public void goBack()
-    {
+    /* 
+    Pushes current page to forwardStack and moves to the top of the backStack
+    Returns a status message O(1)
+    */ 
+    public String goBack() {
         forwardStack.push(currentPage);
 
-        // Will throw an error if stack is empty (intended)
+        // Will throw an error if stack is empty
         currentPage = backStack.pop();
-        System.out.println("Now at [" + currentPage + "]");
-        //openWebpage(currentPage);
+
+        return "Now at [" + currentPage + "]\n" + openWebpage(currentPage);
     }
 
-    public void goForward()
-    {
+    /*
+    Pushes currentPage to backStack and moves to the top of the forwardStack
+    Returns a status message O(1)
+    */
+
+    public String goForward() {
         backStack.push(currentPage);
 
-        // Will throw an error if stack is empty (intended)
+        // Will throw an error if stack is empty
         currentPage = forwardStack.pop();
         
-        System.out.println("Now at [" + currentPage + "]");
-        //openWebpage(currentPage);
+        return "Now at [" + currentPage + "]\n" + openWebpage(currentPage);
     }
 
-    public void showHistory()
-    {
-        Iterator<String> it = historyQueue.iterator();
-
-        while(it.hasNext())
-        {
-            System.out.println(it.next());
+    // Prints out everything in the historyQueue O(n)
+    public void showHistory() {  
+        for (Object item : historyQueue) {
+            System.out.println(item);
         }
     }
 
-    public void clearHistory()
-    {
+    // Clears all saved data O(n)
+    public void clearHistory() {   
+        currentPage = null;
         historyQueue.clear();
         backStack.clear();
         forwardStack.clear();
-        currentPage = null;
     }
 
-    public void closeBrowser()
-    {
+    // Tries to save all tracked data in the savestate file O(n)
+    public void closeBrowser() {
         String fileName = "savestate.txt";
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(fileName)))
-        {
-            writer.write("currentPage");
-            writer.newLine();
-            writer.write(currentPage);
-            writer.newLine();
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
 
-            writer.write("backStack");
-            writer.newLine();
+            // Adds a section head and saves the current page
+            writer.write("currentPage\n" + currentPage +"\n");
+            
+            // Section header for easy parsing later
+            writer.write("backStack\n");
+
+            // Iterates through the backStack and saves all data
             for (String url : backStack) {
-                writer.write(url);
-                writer.newLine();
+                writer.write(url + "\n");
             }
 
-            writer.write("forwardStack");
-            writer.newLine();
+            // Section header for easy parsing later
+            writer.write("forwardStack\n");
+
+            // Iterates through the forwardStack and saves all data
             for (String url : forwardStack) {
-                writer.write(url);
-                writer.newLine();
+                writer.write(url + "\n");
             }
 
-            writer.write("historyQueue");
-            writer.newLine();
+            // Section header for easy parsing later
+            writer.write("historyQueue\n");
+
+            // Iterates through the historyQueue and saves all data
             for (String url : historyQueue) {
-                writer.write(url);
-                writer.newLine();
+                writer.write(url + "\n");
             }
         }
-        catch(IOException e)
-        {
+        catch(IOException e) {
             System.out.println("Error: could not write to file");
         }
     }
 
-    public void restoreLastSession()
-    {
+    // Tries to load all saved data from file into memory, returns a status message O(n)
+    public String restoreLastSession() {
         String fileName = "savestate.txt";
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) 
-        {
+
+        // Try to read the file using BufferedReader
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
-            int stateTracker = 0;
-            while ((line = reader.readLine()) != null) 
-            {
-                switch (line) {
-                    case "currentPage" -> 
-                    {
-                        stateTracker = 0;
-                        continue;
-                    }
-                    case "backStack" -> 
-                    {
-                        stateTracker = 1;
-                        continue;
-                    }
-                    case "forwardStack" -> 
-                    {
-                        stateTracker = 2;
-                        continue;
-                    }
-                    case "historyQueue" ->
-                    {
-                        stateTracker = 3;
-                        continue;
-                    }
-                }
+            int section = 0;
 
-                switch (stateTracker) {
-                    case 0 -> 
-                    {
-                        currentPage = line;
-                    }
-                    case 1 -> 
-                    {
-                        backStack.push(line);
-                    }
-                    case 2 -> 
-                    {
-                        forwardStack.push(line);
-                    }
-                    case 3 -> 
-                    {
-                        historyQueue.enqueue(line);
-                    }
-                }
+            // Main reading loop
+            while ((line = reader.readLine()) != null) {
+                
+                /*
+                Helper methods create a rudimentary state machine
+                They categorize each line of the file and load it into the correct place
+                */ 
+                section = updateSection(line, section);
+                parseLine(line, section);
             }
-        } 
-        catch (IOException e) 
-        {
-            System.out.println("Error: could not read from file");
         }
+        catch (IOException e) { return "Error: could not read from file"; }
 
-        if (currentPage != null)
-        {
-            System.out.println("Now at [" + currentPage + "]");
+        // The currentPage will be null if the user had no save data
+        if (currentPage != null) { return ("Now at [" + currentPage + "]"); }
+
+        // There is no currentPage
+        return "";
+    }
+
+    // Helper method for restoreLastSession that updates what save data section the reader is in
+    private int updateSection(String line, int section) {
+        switch (line) {
+            case "currentPage"  -> section = 0;
+            case "backStack"    -> section = 1; 
+            case "forwardStack" -> section = 2;
+            case "historyQueue" -> section = 3;
+        }
+        return section;
+    }
+
+    // Helper method that writes the line data to the correct stack or queue
+    private void parseLine(String line, int section) {
+        switch (section) {
+            case 0 -> currentPage = line;
+            case 1 -> backStack.push(line);
+            case 2 -> forwardStack.push(line);
+            case 3 -> historyQueue.enqueue(line);
         }
     }
 }

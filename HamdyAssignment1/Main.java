@@ -1,16 +1,26 @@
+/*
+File Name:  Main.java
+Date:       2/21/2026
+Author:     Asher Isgitt
+Purpose:    Driver program that runs and tests the browser navigation system
+*/
+
 import java.util.Scanner;
 
-public class Main
-{
-    public static void main(String[] args)
-    {
+public class Main {
+    public static void main(String[] args) {
+        handleBrowserInteraction();
+    }
+
+    // Main driver for browsing
+    public static void handleBrowserInteraction() {
+
         Scanner reader = new Scanner(System.in);
 
         BrowserNavigation navigator = new BrowserNavigation();
 
-        System.out.println("Browser active. Type 'help' for a list of commands.");
-        navigator.restoreLastSession();
-        
+        System.out.println("Browser testing active. Type 'help' for a list of commands.");
+        System.out.println(navigator.restoreLastSession());
 
         // User Interaction Loop
         OUTER:
@@ -20,7 +30,7 @@ public class Main
             {
                 String url = input.substring(6);
 
-                navigator.visitWebsite(url);
+                System.out.println(navigator.visitWebsite(url));
                 continue;
             }
 
