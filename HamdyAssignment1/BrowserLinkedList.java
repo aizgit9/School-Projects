@@ -15,6 +15,7 @@ public class BrowserLinkedList<AnyType> implements Iterable<AnyType>
     private int theSize;
     private int modCount = 0; // Total amount of modifications to detect tampering
 
+    // Default constructor
     public BrowserLinkedList() { doClear(); }
 
     // Returns the list size O(1)

@@ -17,6 +17,7 @@ public class BrowserArrayList<AnyType> implements Iterable<AnyType>
 
     private int modCount = 0; // Total amount of modifications to detect tampering
 
+    // Default constructor
     public BrowserArrayList() {
         theItems = (AnyType[]) new Object[10]; 
         doClear();
