@@ -106,4 +106,14 @@ clear - O(n)
 Clearing the array while preventing memory leaks requires looping through and nulling out the array in linear time.
 
 BrowserStack:
-All operations are wrappers of O(1) operations in BrowserLinkedList discussed above.
+push - O(1)
+AddFront happens in constant time because it only requires a simple rewiring of pointers
+pop - O(1)
+The actual remove operation happens in constant time, because it is only a simple rewiring of pointers. Even though
+the underlying function in the linkedList has a linear search, the pop always happens at index 0 so it is irrelevant.
+peek - O(1)
+Get is usually in linear time because the program has to search through every node to get to the correct index. Even though
+the underlying function in the linkedList has a linear search, the peek always happens at index 0 so it is irrelevant.
+clear - O(1)
+Clearing happens in constant time because only only the head and tail pointers have to be nulled out to send the entire list to
+garbage collection.
