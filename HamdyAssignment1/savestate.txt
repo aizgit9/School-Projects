@@ -1,3 +1,14 @@
+currentPage
+3
 backStack
+1
+2
 forwardStack
+5
+4
 historyQueue
+1
+2
+3
+4
+5
