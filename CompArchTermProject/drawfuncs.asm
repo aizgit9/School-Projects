@@ -661,6 +661,8 @@ DrawNum: #$a0 holds top left corner, $a1 holds the player, $a2 holds the number 
 		beq $a2, $t0, Case_8
 		li $t0, 9
 		beq $a2, $t0, Case_9
+		li $t0, 10
+		beq $a2, $t0, Case_10
 		
 		j End_Switch
 	Case_0:
@@ -693,17 +695,32 @@ DrawNum: #$a0 holds top left corner, $a1 holds the player, $a2 holds the number 
 	Case_9:
 		jal DrawNine
 		j End_Switch
+	Case_10:
+		jal DrawOne
+		addi $a0, $a0, 16
+		jal DrawZero
+		j End_Switch
 	End_Switch:
 	lw $ra, 0($sp) # save program counter on the stack
 	addi $sp, $sp, 4
 	jr $ra
 
-DrawBoard: #a0 holds top left corner address
-	addi $sp, $sp, -8
+DrawSpaces:
+	DrawSquareLoop:
+	
+	jr $ra
+
+DrawBoard: #a0 holds top left corner address, $a1 holds the team_array address, $a2 holds the num_array address
+	addi $sp, $sp, -16
 	sw $ra, 0($sp) # save program counter on the stack
 	sw $s0, 4($sp) # save $s0 on the stack
+	sw $s1, 8($sp) # save $s1 on the stack
+	sw $s2, 12($sp) # save $s2 on the stack
+	
 	
 	move $s0, $a0 # $s0 now holds top left corner
+	move $s1, $a1 # $s1 now holds team_array address
+	move $s2, $a2 # $s2 now holds num_array address
 	
 	# ROW 1 (29, 5)
 	li $t0, 29
@@ -713,8 +730,9 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	
+	lw $a1, 0($s1)
+	lw $a2, 0($s2)
 	jal DrawNum
 	
 	# ROW 2 (24,15), (34, 15)
@@ -725,8 +743,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 4($s1)
+	lw $a2, 4($s2)
 	jal DrawNum
 	
 	li $t0, 34
@@ -736,8 +754,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 8($s1)
+	lw $a2, 8($s2)
 	jal DrawNum
 	
 	# ROW 3 (19,25), (29, 25), (39, 25)
@@ -748,8 +766,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 12($s1)
+	lw $a2, 12($s2)
 	jal DrawNum
 	
 	li $t0, 29
@@ -759,8 +777,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 16($s1)
+	lw $a2, 16($s2)
 	jal DrawNum
 	
 	li $t0, 39
@@ -770,8 +788,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 20($s1)
+	lw $a2, 20($s2)
 	jal DrawNum
 	
 	# ROW 4 (14,35), (24,35), (34,35), (44,35)
@@ -782,8 +800,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 24($s1)
+	lw $a2, 24($s2)
 	jal DrawNum
 	
 	li $t0, 24
@@ -793,8 +811,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 28($s1)
+	lw $a2, 28($s2)
 	jal DrawNum
 	
 	li $t0, 34
@@ -804,8 +822,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 32($s1)
+	lw $a2, 32($s2)
 	jal DrawNum
 	
 	li $t0, 44
@@ -815,8 +833,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 36($s1)
+	lw $a2, 36($s2)
 	jal DrawNum
 	
 	# ROW 5 (9,45), (19,45), (29, 45), (39, 45), (49,45)
@@ -827,8 +845,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 40($s1)
+	lw $a2, 40($s2)
 	jal DrawNum
 	
 	li $t0, 19
@@ -838,8 +856,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 44($s1)
+	lw $a2, 44($s2)
 	jal DrawNum
 	
 	li $t0, 29
@@ -849,8 +867,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 48($s1)
+	lw $a2, 48($s2)
 	jal DrawNum
 	
 	li $t0, 39
@@ -860,8 +878,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 52($s1)
+	lw $a2, 52($s2)
 	jal DrawNum
 	
 	li $t0, 49
@@ -871,8 +889,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 56($s1)
+	lw $a2, 56($s2)
 	jal DrawNum
 	
 	# ROW 6 (4,55), (14,55), (24,55), (34,55), (44,55), (54,55)
@@ -883,8 +901,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 60($s1)
+	lw $a2, 60($s2)
 	jal DrawNum
 	
 	li $t0, 14
@@ -894,8 +912,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 64($s1)
+	lw $a2, 64($s2)
 	jal DrawNum
 	
 	li $t0, 24
@@ -905,8 +923,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 68($s1)
+	lw $a2, 68($s2)
 	jal DrawNum
 	
 	li $t0, 34
@@ -916,8 +934,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 72($s1)
+	lw $a2, 72($s2)
 	jal DrawNum
 	
 	li $t0, 44
@@ -927,8 +945,8 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 76($s1)
+	lw $a2, 76($s2)
 	jal DrawNum
 	
 	li $t0, 54
@@ -938,10 +956,12 @@ DrawBoard: #a0 holds top left corner address
 	
 	add $t2, $t0, $t1 # Final offset
 	add $a0, $s0, $t2
-	li $a1, 1
-	li $a2, 8
+	lw $a1, 80($s1)
+	lw $a2, 80($s2)
 	jal DrawNum
 	
+	lw $s2, 12($sp)
+	lw $s1, 8($sp)
 	lw $s0, 4($sp)
 	lw $ra, 0($sp) # restore program counter from the stack
 	addi $sp, $sp, 8

@@ -8,6 +8,8 @@
 .eqv P2_COLOR 0x005567ED
 
 .data
+num_array:	.word 1,2,3,4,5,6,7,8,9,10,-1,1,2,3,4,5,6,7,8,9,10 # Numbers on the board
+team_array:	.word 1,2,1,2,1,2,1,2,1, 2,-1,1,2,1,2,1,2,1,2,1, 2 # Player labels on the board
 
 .text
 	# Allocate memory for screen on the heap
@@ -25,6 +27,8 @@
 	jal ClearScreen
 	
 	move $a0, $s0
+	la $a1, team_array
+	la $a2, num_array
 	jal DrawBoard
 	
 	
