@@ -172,6 +172,7 @@ public class SplayTree {
     }
 
     public void DFSSplayTree() {
+        System.out.println();
         preorderTraversal(root);
     }
 
