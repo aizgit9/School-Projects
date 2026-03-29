@@ -6,10 +6,12 @@ public class QuadraticHashTable {
     private int[] table;
 
     public QuadraticHashTable(int capacity) {
+        // Find next prime value roughly near capacity
         tableSize = ((BigInteger.valueOf(capacity * 2)).nextProbablePrime()).intValue();
         table = new int[tableSize];
     }
 
+    // Hashes to the index and follows quadratic probing path
     public void insert(int key) {
         if(key == 0) return;
         ensureCapacity();

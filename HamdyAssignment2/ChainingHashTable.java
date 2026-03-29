@@ -17,6 +17,7 @@ public class ChainingHashTable {
         addAtIndex(key, hash(key));
     }
 
+    // Hashes to the index and searches iteratively through the linked list
     public boolean search(int key) {
         Node current = table[hash(key)];
             while(current != null) {
@@ -92,6 +93,7 @@ public class ChainingHashTable {
         itemCount++;
     }
 
+    // Node class
     private class Node {
         Node next;
         int key;

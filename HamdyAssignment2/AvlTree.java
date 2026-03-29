@@ -1,4 +1,3 @@
-
 public class AvlTree {
     private AvlNode root;
     private final int ALLOWED_IMBALANCE = 1;
@@ -6,11 +5,12 @@ public class AvlTree {
         root = null;
     }
 
-    // insert
+    // Public insert method
     public void insert(int key) {
         root = insert(root, key);
     }
 
+    // Private recursive insert method, balances the tree on the way back up
     private AvlNode insert(AvlNode node, int key) {
 
         if(node == null) return new AvlNode(key);
@@ -22,7 +22,7 @@ public class AvlTree {
         return balance(node);
     }
 
-    // search
+    // Search for a key, return true if found and false otherwise
     public boolean search(int key) {
         if(root == null) {
             return false;
@@ -30,6 +30,7 @@ public class AvlTree {
 
         AvlNode node = root;
 
+        // Iterative traversal
         while(node != null) {
             if(key == node.key) return true;
             else if(key > node.key) node = node.right;
@@ -39,6 +40,7 @@ public class AvlTree {
         return false;
     }
 
+    // Balances the given subtree
     private AvlNode balance(AvlNode node) {
         if(node == null) return node;
 
@@ -60,6 +62,7 @@ public class AvlTree {
                 node = doubleWithRightChild(node);
         }
 
+        // Update height
         node.height = Math.max(height(node.left), height(node.right)) + 1;
         return node;
     }
@@ -88,16 +91,19 @@ public class AvlTree {
         return child;
     }
 
+    // Double rotate with left child
     private AvlNode doubleWithLeftChild(AvlNode grandparent) {
         grandparent.left = rotateWithRightChild(grandparent.left);
         return rotateWithLeftChild(grandparent);
     }
 
+    // Double rotate with right child
     private AvlNode doubleWithRightChild(AvlNode grandparent) {
         grandparent.right = rotateWithLeftChild(grandparent.right);
         return rotateWithRightChild(grandparent);
     }
 
+    // Return the height of a given node, -1 for null
     private int height(AvlNode node) {
         if(node == null) return -1;
         return node.height;
@@ -111,6 +117,7 @@ public class AvlTree {
 
         AvlNode node = root;
 
+        // Iterative traversal
         while(node != null) {
             if(key == node.key) return node.height;
             else if(key > node.key) node = node.right;
@@ -120,6 +127,7 @@ public class AvlTree {
         return -1;
     }
     
+    // Node class - must track height value
     private static class AvlNode {
         int key;
         AvlNode left;

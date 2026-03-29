@@ -6,10 +6,12 @@ public class SplayTree {
         root = null;
     }
 
+    // Public insert method
     public void insert(int key) {
         root = insert(root, key);
     }
 
+    // Private recursive insert method
     private SplayNode insert(SplayNode node, int key) {
         if(node == null) return new SplayNode(key);
 
@@ -20,7 +22,7 @@ public class SplayTree {
         return node;
     }
 
-    // search
+    // Searches for the key and then splays the node to the root
     public boolean search(int key) {
         if(root == null) {
             return false;
@@ -187,6 +189,7 @@ public class SplayTree {
         preorderTraversal(node.right);
     }
 
+    // Node class - must track parent pointer
     private static class SplayNode {
         int key;
         SplayNode left;

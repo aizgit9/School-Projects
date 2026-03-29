@@ -267,7 +267,7 @@ public class Main {
     }
 
     public static int[] testChainingHashTable() throws InterruptedException  {
-        ChainingHashTable theTable = new ChainingHashTable(11);
+        ChainingHashTable theTable = new ChainingHashTable(1000);
 
         long[] metrics = new long[12];
         int[] output = new int[12];
@@ -372,7 +372,7 @@ public class Main {
     }
 
     public static int[] testQuadraticHashTable() throws InterruptedException  {
-        QuadraticHashTable theTable = new QuadraticHashTable(11);
+        QuadraticHashTable theTable = new QuadraticHashTable(1000);
 
         long[] metrics = new long[12];
         int[] output = new int[12];
