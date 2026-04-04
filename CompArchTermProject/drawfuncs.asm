@@ -1,618 +1,449 @@
-# CS 2340 Assignment 5
+# CS 2340 Term Project
 # Author: Asher Isgitt
-# Date: 3/24/2026
+# Date: 4/3/2026
 # drawfuncs.asm: contains vital draw functions for the bitmap display
 
 .text
 
 DrawZero: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move to right, skipping 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move to right, skipping 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move to right, skipping 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move to right, skipping 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move to right, skipping 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move to right, skipping 1 pixel
+	add $t2, $a0, $t1		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 
 DrawOne: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 4 # Move pointer back to line beginning
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 4 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 
 DrawTwo: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixe
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 	
 DrawThree: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginnin
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1	 	# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	addi $t1, $t1, 8
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	add $t1, $t1, $t3 # Move to next line
-	subi $t1, $t1, 8
-	
+	addi $t1, $t1, 8		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
+	subi $t1, $t1, 8		# Move pointer back to line beginning
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 	
 DrawFour: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move right 2 pixels
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move right 2 pixels
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2)	 		# Write color value into pixel
+	addi $t1, $t1, 8 		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
 	addi $t1, $t1, 8
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 	
 DrawFive: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2)	 		# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1	 	# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 	
 DrawSix: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3	 	# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move right 2 pixels
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
 	jr $ra
 	
 DrawSeven: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line
-
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	add $t1, $t1, $t3 # Move to next line	
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line	
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 
 DrawEight: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move right 2 pixels
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move right 2 pixels
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	jr $ra
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	jr $ra					# Return
 	
 DrawNine: # Args: $a0 top left corner, $a1 color
 	li $t3, SCREEN_WIDTH_BYTES # Load screen width constant
-	
 	# ROW 1
-	li $t1, 0 # Offset
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	add $t1, $t1, $t3 # Move to next line
-	
+	li $t1, 0 				# Offset
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 2
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 8 # Move right 2 pixels
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-	
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 8 		# Move right 2 pixels
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 3
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 4
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	subi $t1, $t1, 8 # Move pointer back to line beginning
-
-	add $t1, $t1, $t3 # Move to next line
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	subi $t1, $t1, 8 		# Move pointer back to line beginning
+	add $t1, $t1, $t3 		# Move to next line
 	# ROW 5
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
-	addi $t1, $t1, 4 # Move right 1 pixel
-	add $t2, $a0, $t1 # Add offset to base pixel address
-	sw $a1, 0($t2) # Write color value into pixel
-	
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
+	addi $t1, $t1, 4 		# Move right 1 pixel
+	add $t2, $a0, $t1 		# Add offset to base pixel address
+	sw $a1, 0($t2) 			# Write color value into pixel
 	jr $ra # Return
 	
-ClearScreen: # $a0 holds top left corner address, $a1 holds background color 
+ClearScreen: # $a0 holds top left corner address
 	li $t0, SCREEN_WIDTH # Load SCREEN_WIDTH into $t0
 	li $t1, SCREEN_HEIGHT # Load SCREEN_HEIGHT into $t1
+	li $t5, BACKGROUND_COLOR
 	mul $t2, $t0, $t1 # Outer loop end condition
 	
 	li $t0, 0
@@ -622,7 +453,7 @@ ClearScreen: # $a0 holds top left corner address, $a1 holds background color
 		sll $t3, $t0, 2 # Multiply i by 4 for offset
 		add $t4, $a0, $t3 # Add offset to base address
 		
-		sw $a1, 0($t4) # Write color into address
+		sw $t5, 0($t4) # Write color into address
 		addi $t0, $t0, 1 # Increment $t0 by 1
 	j ClearLoop # Go back to main loop label
 	ExitClearLoop: # End main loop
