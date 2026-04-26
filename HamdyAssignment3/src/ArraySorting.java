@@ -1,14 +1,21 @@
 import java.lang.Math;
 public static void main(String[] args) {
+    testSorts(0, 100);
+}
+
+// Tests algorithms on arrays of increasing size and specified range (min to max)
+// Displays formatted results
+public static void testSorts(int min, int max) {
+    System.out.printf("Range: %d to %d%n", min, max);
     // Generate random arrays
-    int[] arr50 = generateRandArray(0, 100,50);
-    int[] arr500 = generateRandArray(0, 100, 500);
-    int[] arr1k = generateRandArray(0, 100, 1000);
-    int[] arr2k = generateRandArray(0, 100, 2000);
-    int[] arr5k = generateRandArray(0, 100, 5000);
-    int[] arr10k = generateRandArray(0, 100, 10000);
-    int[] arr50k = generateRandArray(0, 100, 50000);
-    int[] arr100k = generateRandArray(0, 100, 100000);
+    int[] arr50 = generateRandArray(min, max,50);
+    int[] arr500 = generateRandArray(min, max, 500);
+    int[] arr1k = generateRandArray(min, max, 1000);
+    int[] arr2k = generateRandArray(min, max, 2000);
+    int[] arr5k = generateRandArray(min, max, 5000);
+    int[] arr10k = generateRandArray(min, max, 10000);
+    int[] arr50k = generateRandArray(min, max, 50000);
+    int[] arr100k = generateRandArray(min, max, 100000);
 
     // Line 1 - Labels
     System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s%n",
@@ -50,24 +57,13 @@ public static void main(String[] args) {
             testQuickSort(arr50k), testQuickSort(arr50k, 10), testQuickSort(arr50k, 50), testQuickSort(arr50k, 500));
 
     // Line 9 - 100000
-    System.out.printf("%-20s %-20d %-20d %-20d %-20d %-20d %-20d %-20d%n",
+    System.out.printf("%-20s %-20d %-20d %-20d %-20d %-20d %-20d %-20d%n%n",
             "100000", testInsertionSort(arr100k), testHeapSort(arr100k), testMergeSort(arr100k),
             testQuickSort(arr100k), testQuickSort(arr100k, 10), testQuickSort(arr100k, 50), testQuickSort(arr100k, 500));
 }
 
 public static void insertionSort(int[] arr) {
-    int n = arr.length;
-    int i = 0;
-
-    for(int p = 0; p < n; p++) {
-        int temp = arr[p];
-
-        for(i = p; i > 0 && temp < arr[i - 1]; i--) {
-                arr[i] = arr[i - 1];
-        }
-
-        arr[i] = temp;
-    }
+    insertionSort(arr, 0, arr.length - 1);
 }
 
 public static void insertionSort(int[] arr, int start, int end) {
@@ -93,12 +89,7 @@ public static void heapSort(int[] arr) {
     }
 }
 
-public static void swap(int[] arr, int i, int j) {
-    int temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
-
+// "Percolates" an element down by swapping with its children in order to maintain heap order
 public static void percolateDown(int[] arr, int i, int n) {
     int l = 2 * i + 1; // left child
     int r = 2 * i + 2; // right child
@@ -123,6 +114,7 @@ public static void percolateDown(int[] arr, int i, int n) {
     }
 }
 
+// Orders an array into a max heap
 public static void buildMaxHeap(int[] arr, int n) {
     int lastParent = (n - 1) / 2;
     for (int i = lastParent; i >= 0; i--) {
@@ -130,6 +122,7 @@ public static void buildMaxHeap(int[] arr, int n) {
     }
 }
 
+// Removes and returns the max element from the heap
 public static int deleteMax(int[] arr, int n) {
     int max = arr[0];
     arr[0] = arr[n - 1];
@@ -141,6 +134,7 @@ public static int deleteMax(int[] arr, int n) {
 public static void mergeSort(int[] arr) {
     mergeSort(arr, 0, arr.length - 1);
 }
+
 public static void mergeSort(int[] arr, int start, int end) {
     if(end > start) {
         int mid = (end + start) / 2;
@@ -150,6 +144,8 @@ public static void mergeSort(int[] arr, int start, int end) {
     }
 }
 
+// Merges two sorted sections of an array (start to mid, mid+1 to end)
+// Overwrites array section with sorted portion
 public static void merge(int[] arr, int start, int mid, int end) {
     int[] temp = new int[end - start + 1];
     int i = start, j = mid + 1, k = 0;
@@ -184,6 +180,8 @@ public static void merge(int[] arr, int start, int mid, int end) {
     }
 }
 
+// Returns the median of the first, middle, and last elements of an array
+// Sorts the elements it checks for a small optimization
 public static int medianOfThree(int[]arr, int start, int end) {
     int mid = (end + start) / 2;
 
@@ -196,6 +194,10 @@ public static int medianOfThree(int[]arr, int start, int end) {
     swap(arr, mid, end - 1); // Place pivot in position
 
     return arr[end - 1]; // Return pivot value
+}
+
+public static void quickSort(int[] arr) {
+    quickSort(arr, 0, arr.length - 1);
 }
 
 public static void quickSort(int[] arr, int start, int end) {
@@ -233,14 +235,11 @@ public static void quickSort(int[] arr, int start, int end) {
     quickSort(arr, i + 1, end);
 }
 
-public static void quickSort(int[] arr) {
-    quickSort(arr, 0, arr.length - 1);
-}
-
 public static void quickSort(int[] arr, int cutoff) {
     quickSort(arr, 0, arr.length - 1, cutoff);
 }
 
+// Quicksort that stops at a cutoff value and then performs insertion sort
 public static void quickSort(int[] arr, int start, int end, int cutoff) {
     int size = end - start + 1;
 
@@ -273,6 +272,14 @@ public static void quickSort(int[] arr, int start, int end, int cutoff) {
     quickSort(arr, i + 1, end, cutoff);
 }
 
+// Swaps two elements in an array
+public static void swap(int[] arr, int i, int j) {
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+// Generates a random array of specified size and range (min to max)
 public static int[] generateRandArray(int min, int max, int size) {
     int[] array = new int[size];
     for (int i = 0; i < size; i++) {
@@ -281,6 +288,7 @@ public static int[] generateRandArray(int min, int max, int size) {
     return array;
 }
 
+// Displays an array
 public static void printArray(int[] arr) {
     for(int j : arr) {
         System.out.print(j + " ");
@@ -288,6 +296,7 @@ public static void printArray(int[] arr) {
     System.out.println();
 }
 
+// Checks if an array is sorted
 public static boolean isSorted(int[] arr) {
     for (int i = 1; i < arr.length; i++) {
         if ((arr[i - 1] > arr[i])) {
@@ -297,62 +306,92 @@ public static boolean isSorted(int[] arr) {
     return true;
 }
 
-// Runs insertion sort and returns time
+// Runs insertion sort on an array 5 times and returns average time
 public static long testInsertionSort(int[] arr) {
-    int[] copy = arr.clone();
+    long total = 0;
 
-    long startTime = System.nanoTime();
-    insertionSort(copy);
-    long endTime = System.nanoTime();
+    for (int i = 0; i < 5; i++) {
+        int[] copy = arr.clone();
 
-    if(!isSorted(copy)) System.out.println("Error: array was not sorted");
-    return endTime - startTime;
+        long startTime = System.nanoTime();
+        insertionSort(copy);
+        long endTime = System.nanoTime();
+
+        if(!isSorted(copy)) System.out.println("Error: array was not sorted");
+        total += endTime - startTime;
+    }
+
+    return total / 5;
 }
 
-// Runs heap sort and returns time
+// Runs heap sort on an array 5 times and returns average time
 public static long testHeapSort(int[] arr) {
-    int[] copy = arr.clone();
+    long total = 0;
 
-    long startTime = System.nanoTime();
-    heapSort(copy);
-    long endTime = System.nanoTime();
+    for (int i = 0; i < 5; i++) {
+        int[] copy = arr.clone();
 
-    if(!isSorted(copy)) System.out.println("Error: array was not sorted");
-    return endTime - startTime;
+        long startTime = System.nanoTime();
+        heapSort(copy);
+        long endTime = System.nanoTime();
+
+        if(!isSorted(copy)) System.out.println("Error: array was not sorted");
+        total += endTime - startTime;
+    }
+
+    return total / 5;
 }
 
-// Runs merge sort and returns time
+// Runs merge sort on an array 5 times and returns average time
 public static long testMergeSort(int[] arr) {
-    int[] copy = arr.clone();
+    long total = 0;
 
-    long startTime = System.nanoTime();
-    mergeSort(copy);
-    long endTime = System.nanoTime();
+    for (int i = 0; i < 5; i++) {
+        int[] copy = arr.clone();
 
-    if(!isSorted(copy)) System.out.println("Error: array was not sorted");
-    return endTime - startTime;
+        long startTime = System.nanoTime();
+        mergeSort(copy);
+        long endTime = System.nanoTime();
+
+        if(!isSorted(copy)) System.out.println("Error: array was not sorted");
+        total += endTime - startTime;
+    }
+
+    return total / 5;
 }
 
-// Runs basic quicksort and returns time
+// Runs basic quick sort on an array 5 times and returns average time
 public static long testQuickSort(int[] arr) {
-    int[] copy = arr.clone();
+    long total = 0;
 
-    long startTime = System.nanoTime();
-    quickSort(copy);
-    long endTime = System.nanoTime();
+    for (int i = 0; i < 5; i++) {
+        int[] copy = arr.clone();
 
-    if(!isSorted(copy)) System.out.println("Error: array was not sorted");
-    return endTime - startTime;
+        long startTime = System.nanoTime();
+        quickSort(copy);
+        long endTime = System.nanoTime();
+
+        if(!isSorted(copy)) System.out.println("Error: array was not sorted");
+        total += endTime - startTime;
+    }
+
+    return total / 5;
 }
 
-// Runs cutoff quicksort and returns time
+// Runs cutoff quick sort on an array 5 times and returns average time
 public static long testQuickSort(int[] arr, int cutoff) {
-    int[] copy = arr.clone();
+    long total = 0;
 
-    long startTime = System.nanoTime();
-    quickSort(copy, cutoff);
-    long endTime = System.nanoTime();
+    for (int i = 0; i < 5; i++) {
+        int[] copy = arr.clone();
 
-    if(!isSorted(copy)) System.out.println("Error: array was not sorted");
-    return endTime - startTime;
+        long startTime = System.nanoTime();
+        quickSort(copy, cutoff);
+        long endTime = System.nanoTime();
+
+        if(!isSorted(copy)) System.out.println("Error: array was not sorted");
+        total += endTime - startTime;
+    }
+
+    return total / 5;
 }
