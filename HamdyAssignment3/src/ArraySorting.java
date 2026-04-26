@@ -1,6 +1,14 @@
 import java.lang.Math;
 public static void main(String[] args) {
-    testSorts(0, 100);
+    // Test on increasing ranges
+    testSorts(0, 50);
+    testSorts(0, 500);
+    testSorts(0, 1000);
+    testSorts(0, 2000);
+    testSorts(0, 5000);
+    testSorts(0, 10000);
+    testSorts(0, 50000);
+    testSorts(0, 100000);
 }
 
 // Tests algorithms on arrays of increasing size and specified range (min to max)
